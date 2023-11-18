@@ -20,7 +20,7 @@ jobs:
       organization: "goruha"
       repository: ${{ github.event.repository.name }}
       registry: registry.hub.docker.com
-      file: ./compose/production/django/Dockerfile
+      file: ./Dockerfile
       docker-login: goruha
     secrets:
       docker-password: ${{ secrets.DOCKER_PASSWORD }}
