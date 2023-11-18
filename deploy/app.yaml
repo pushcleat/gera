@@ -12,7 +12,7 @@ releases:
   recreatePods: false
   values:
     - image:
-        repository: '{{ requireEnv "IMAGE_NAME"}}'
+        repository: '{{ requiredEnv "IMAGE_NAME"}}'
         pullPolicy: IfNotPresent
         # Overrides the image tag whose default is the chart appVersion.
         tag: '{{ env "IMAGE_TAG" | default "0.1.0" }}'
