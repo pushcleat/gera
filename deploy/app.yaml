@@ -1,9 +1,21 @@
 environments:
   default:
   preview:
+    values:
+      - storageClass: openebs-hostpath
+        host: "%s-%s.goruha.space"
   dev:
+    values:
+      - storageClass: do-block-storage
+        host: "%s-%s.goruha.space"
   staging:
+    values:
+      - storageClass: do-block-storage
+        host: "%s-%s.goruha.space"
   production:
+    values:
+      - storageClass: do-block-storage
+        host: "%s-%s.goruha.space"
 releases:
 - name: 'app'
   chart: ./charts/app
