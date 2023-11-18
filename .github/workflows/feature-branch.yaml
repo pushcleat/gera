@@ -1,0 +1,56 @@
+name: Feature branch
+
+# Enable Buildkit and let compose use it to speed up image building
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+on:
+  pull_request:
+    branches: [ 'main' ]
+    types: [opened, synchronize, reopened, closed, labeled, unlabeled]
+    paths-ignore: [ "docs/**" ]
+
+permissions:
+  pull-requests: write
+  deployments: write
+  id-token: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: pushcleat/github-actions-workflows/.github/workflows/ci-dockerized-app-build.yml@main
+    with:
+      organization: "goruha"
+      repository: ${{ github.event.repository.name }}
+      registry: registry.hub.docker.com
+      file: ./Dockerfile
+      docker-login: goruha
+    secrets:
+      docker-password: ${{ secrets.DOCKER_PASSWORD }}
+
+  cd:
+    uses: pushcleat/github-actions-workflows/.github/workflows/cd-preview-argocd.yml@main
+    needs: [ ci ]
+    if: ${{ always() && needs.ci.result != 'failure' }}
+    with:
+      image: ${{ needs.ci.outputs.image }}
+      tag: ${{ needs.ci.outputs.tag }}
+      repository: ${{ github.event.repository.name }}
+      organization: ${{ github.event.repository.owner.login }}
+      path: ./deploy
+      open: ${{ github.event.pull_request.state == 'open' }}
+      labels: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+      ref: ${{ github.event.pull_request.head.ref  }}
+      exclusive: false
+      env-label: |
+        preview: deploy
+      synchronously: false
+    secrets:
+      github-private-actions-pat: ${{ secrets.ARGOCD_DEPLOYMENT_GITHUB_TOKEN }}
+      CLOUDFLARE_ACCESS_CLIENT_ID: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_ID }}
+      CLOUDFLARE_ACCESS_CLIENT_SECRET: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_SECRET }}

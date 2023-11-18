@@ -1,0 +1,33 @@
+{{- if .Values.postgresql.enabled -}}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "app.fullname" . }}-pg
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:13.12
+  # Example of rolling update strategy:
+  # - unsupervised: automated update of the primary once all
+  #                 replicas have been upgraded (default)
+  # - supervised: requires manual supervision to perform
+  #               the switchover of the primary
+  primaryUpdateStrategy: unsupervised
+  # Require 1Gi of space
+  storage:
+    size: 1Gi
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: {{ .Values.storageClass }}
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: {{ include "app.fullname" . }}-postgresql
+{{- end }}

@@ -1,0 +1,55 @@
+environments:
+  default:
+  preview:
+  dev:
+  staging:
+  production:
+releases:
+- name: 'app'
+  chart: ./charts/app
+  wait: true
+  force: true
+  recreatePods: false
+  values:
+    - image:
+        repository: '{{ requireEnv "IMAGE_NAME"}}'
+        pullPolicy: IfNotPresent
+        # Overrides the image tag whose default is the chart appVersion.
+        tag: '{{ env "IMAGE_TAG" | default "0.1.0" }}'
+
+      imagePullSecrets:
+        - "dockerlogin-default"
+
+      storageClass: {{ .Values.storageClass }}
+
+      # Service endpoint
+      service:
+        type: ClusterIP
+        port: 8000
+
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+          nginx.ingress.kubernetes.io/backend-protocol: HTTP
+          nginx.ingress.kubernetes.io/ssl-passthrough: 'false'
+          nginx.ingress.kubernetes.io/proxy-body-size: 100m
+          nginx.ingress.kubernetes.io/client_max_body_size: 100m
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          outputs.platform.cloudposse.com/webapp-url: https://{{ printf .Values.host "gera" .Namespace }}
+          forecastle.stakater.com/expose: "true"
+          forecastle.stakater.com/icon: https://upload.wikimedia.org/wikipedia/commons/9/95/Wikilabs.png
+          forecastle.stakater.com/appName: Peredelano Hack
+          forecastle.stakater.com/group: {{ title .Namespace }}
+          forecastle.stakater.com/url: https://{{ printf .Values.host "gera" .Namespace }}
+          forecastle.stakater.com/network-restricted: "true"
+          forecastle.stakater.com/instance: "default"
+        hosts:
+          - host: {{ printf .Values.host "gera" .Namespace }}
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+        tls:
+          - hosts:
+              - {{ printf .Values.host "gera" .Namespace }}
+            secretName: {{ printf .Values.host "gera" .Namespace }}-tls

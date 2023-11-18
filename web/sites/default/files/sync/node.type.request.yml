@@ -1,0 +1,17 @@
+uuid: c2cde7e9-73b5-41f2-8549-5cb480531f6d
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: Request
+type: request
+description: 'Request from person'
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false

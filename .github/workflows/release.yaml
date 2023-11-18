@@ -1,0 +1,40 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    uses: pushcleat/github-actions-workflows/.github/workflows/ci-dockerized-app-promote.yml@main
+    with:
+      organization: "goruha"
+      repository: ${{ github.event.repository.name }}
+      registry: registry.hub.docker.com
+      version: ${{ github.event.release.tag_name }}
+      docker-login: goruha
+    secrets:
+      docker-password: ${{ secrets.DOCKER_PASSWORD }}
+
+  cd:
+    uses: pushcleat/github-actions-workflows/.github/workflows/cd-argocd.yml@main
+    needs: [ ci ]
+    with:
+      image: ${{ needs.ci.outputs.image }}
+      tag: ${{ needs.ci.outputs.tag }}
+      repository: ${{ github.event.repository.name }}
+      organization: ${{ github.event.repository.owner.login }}
+      environment: staging
+      path: ./deploy
+      synchronously: false
+    secrets:
+      github-private-actions-pat: ${{ secrets.ARGOCD_DEPLOYMENT_GITHUB_TOKEN }}
+      CLOUDFLARE_ACCESS_CLIENT_ID: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_ID }}
+      CLOUDFLARE_ACCESS_CLIENT_SECRET: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_SECRET }}

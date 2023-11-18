@@ -1,0 +1,48 @@
+name: Main Branch
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  deployments: write
+  id-token: write
+  contents: write
+  pull-requests: read
+
+jobs:
+  ci:
+    uses: pushcleat/github-actions-workflows/.github/workflows/ci-dockerized-app-build.yml@main
+    with:
+      organization: "goruha"
+      repository: ${{ github.event.repository.name }}
+      registry: registry.hub.docker.com
+      file: ./compose/production/django/Dockerfile
+      docker-login: goruha
+    secrets:
+      docker-password: ${{ secrets.DOCKER_PASSWORD }}
+
+  cd:
+    uses: pushcleat/github-actions-workflows/.github/workflows/cd-argocd.yml@main
+    needs: [ ci ]
+    with:
+      image: ${{ needs.ci.outputs.image }}
+      tag: ${{ needs.ci.outputs.tag }}
+      repository: ${{ github.event.repository.name }}
+      organization: ${{ github.event.repository.owner.login }}
+      environment: dev
+      path: ./deploy
+      synchronously: false
+    secrets:
+      github-private-actions-pat: ${{ secrets.ARGOCD_DEPLOYMENT_GITHUB_TOKEN }}
+      CLOUDFLARE_ACCESS_CLIENT_ID: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_ID }}
+      CLOUDFLARE_ACCESS_CLIENT_SECRET: ${{ secrets.CLOUDFLARE_ACCESS_CLIENT_SECRET }}
+
+  release:
+    uses:  pushcleat/github-actions-workflows/.github/workflows/controller-draft-release.yml@main
+    needs: [ cd ]
+    secrets:
+      github-private-actions-pat: ${{ secrets.GITHUB_TOKEN }}
