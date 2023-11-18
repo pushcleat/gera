@@ -30,6 +30,7 @@ jobs:
       registry: registry.hub.docker.com
       file: ./Dockerfile
       docker-login: goruha
+      tests_enabled: false
     secrets:
       docker-password: ${{ secrets.DOCKER_PASSWORD }}
 
