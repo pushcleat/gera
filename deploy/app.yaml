@@ -17,7 +17,7 @@ environments:
       - storageClass: do-block-storage
         host: "%s-%s.goruha.space"
 releases:
-- name: 'app'
+- name: 'gera'
   chart: ./charts/app
   wait: true
   force: true
