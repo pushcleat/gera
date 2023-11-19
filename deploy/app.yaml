@@ -6,15 +6,15 @@ environments:
         host: "%s-%s.goruha.space"
   dev:
     values:
-      - storageClass: do-block-storage
+      - storageClass: openebs-hostpath
         host: "%s-%s.goruha.space"
   staging:
     values:
-      - storageClass: do-block-storage
+      - storageClass: openebs-hostpath
         host: "%s-%s.goruha.space"
   production:
     values:
-      - storageClass: do-block-storage
+      - storageClass: openebs-hostpath
         host: "%s-%s.goruha.space"
 releases:
 - name: 'gera'
