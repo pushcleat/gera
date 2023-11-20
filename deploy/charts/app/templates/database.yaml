@@ -16,7 +16,7 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
 spec:
-  name: {{ include "app.fullname" . }}-db
+  secretName: {{ include "app.fullname" . }}-db
   instances: 1
   router:
     instances: 1
