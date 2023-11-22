@@ -33,7 +33,7 @@ spec:
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:wodby/nginx:1.25-5.33.6"
+          image: "registry.hub.docker.com/wodby/nginx:1.25-5.33.6"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
