@@ -61,9 +61,9 @@ spec:
             - name: drupal
               mountPath: /opt/drupal
             - name: drupal-settings
-              mountPath: /opt/drupal/web/sites/default
+              mountPath: /var/www/html/web/sites/default
             - name: drupal-files
-              mountPath: /opt/drupal/web/sites/default/files
+              mountPath: /var/www/html/web/sites/default/files
 
       initContainers:
         - name: init-drupal
