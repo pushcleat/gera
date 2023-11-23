@@ -60,6 +60,8 @@ spec:
           volumeMounts:
             - name: drupal
               mountPath: /var/www/html
+            - name: drupal-settings
+              mountPath: /var/www/html/web/sites/default
       initContainers:
         - name: init-drupal
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -76,6 +78,13 @@ spec:
             items:
               - key: www.conf
                 path: default.conf
+        - name: drupal-settings
+          configMap:
+            name: {{ include "app.fullname" . }}-settings
+            items:
+              - key: settings
+                path: settings.helm.php
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

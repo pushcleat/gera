@@ -848,6 +848,14 @@ if (getenv('IS_DDEV_PROJECT') == 'true' && file_exists(__DIR__ . '/settings.ddev
   include __DIR__ . '/settings.ddev.php';
 }
 
+if (file_exists(__DIR__ . '/settings.helm.php')) {
+  include __DIR__ . '/settings.helm.php';
+}
+
+if (file_exists(__DIR__ . '/settings.k8s.php')) {
+  include __DIR__ . '/settings.k8s.php';
+}
+
 /**
  * Load local development override configuration, if available.
  *
