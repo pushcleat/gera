@@ -65,7 +65,7 @@ spec:
         - name: init-drupal
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           restartPolicy: Always
-          command: [ 'sh', '-c', 'cp -R /var/www/html /drupal' ]
+          command: [ 'sh', '-c', 'cp -R /var/www/html/ /drupal/' ]
           volumeMounts:
             - name: drupal
               mountPath: /drupal
