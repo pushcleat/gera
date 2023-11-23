@@ -59,11 +59,11 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: drupal
-              mountPath: /var/www/html
+              mountPath: /opt/drupal
             - name: drupal-settings
-              mountPath: /var/www/html/web/sites/default
-            - name: drupal-translations
-              mountPath: /var/www/html/web/sites/default/files/translations
+              mountPath: /opt/drupal/web/sites/default
+            - name: drupal-files
+              mountPath: /opt/drupal/web/sites/default/files
 
       initContainers:
         - name: init-drupal
@@ -75,7 +75,7 @@ spec:
       volumes:
         - name: drupal
           emptyDir: {}
-        - name: drupal-translations
+        - name: drupal-files
           emptyDir: {}
         - name: nginx-config
           configMap:
