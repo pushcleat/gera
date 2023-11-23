@@ -59,7 +59,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: drupal
-              mountPath: /opt/drupal
+              mountPath: /var/www/html
             - name: drupal-settings
               mountPath: /var/www/html/web/sites/default
             - name: drupal-files
