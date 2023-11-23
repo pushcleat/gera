@@ -33,21 +33,12 @@ spec:
         - name: nginx
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "registry.hub.docker.com/wodby/nginx:1.25-5.33.6"
+          image: "nginx:1.25.3"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          env:
-            - name: NGINX_STATIC_OPEN_FILE_CACHE
-              value: "off"
-            - name: NGINX_BACKEND_HOST
-              value: "localhost"
-            - name: NGINX_SERVER_ROOT
-              value: "/var/www/html/web"
-            - name: NGINX_VHOST_PRESET
-              value: "drupal10"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
         - name: {{ .Chart.Name }}
