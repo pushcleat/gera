@@ -58,8 +58,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: drupal
-              mountPath: /opt/drupal
             - name: drupal-settings
               mountPath: /opt/drupal/web/sites/default
             - name: drupal-files
@@ -68,7 +66,7 @@ spec:
       initContainers:
         - name: init-drupal
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: [ 'sh', '-c', 'cp -R /var/www/html/* /drupal/' ]
+          command: [ 'sh', '-c', 'cp -R /opt/drupal/* /drupal/' ]
           volumeMounts:
             - name: drupal
               mountPath: /drupal
