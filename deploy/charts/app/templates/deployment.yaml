@@ -42,8 +42,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-{{/*            - name: drupal*/}}
-{{/*              mountPath: /var/www/html*/}}
+            - name: drupal
+              mountPath: /var/www/html
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/
         - name: {{ .Chart.Name }}
@@ -64,7 +64,7 @@ spec:
       initContainers:
         - name: init-drupal
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command: [ 'sh', '-c', 'cp -R /opt/drupal/* /drupal/' ]
+          command: [ 'sh', '-c', 'cp -R /var/www/html/* /drupal/' ]
           volumeMounts:
             - name: drupal
               mountPath: /drupal
