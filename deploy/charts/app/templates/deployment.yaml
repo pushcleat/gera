@@ -80,7 +80,8 @@ spec:
         - name: drupal
           emptyDir: {}
         - name: drupal-files
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: {{ include "app.fullname" . }}
         - name: nginx-config
           configMap:
             name: {{ include "app.fullname" . }}-nginx
