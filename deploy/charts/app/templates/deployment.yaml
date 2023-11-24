@@ -66,7 +66,9 @@ spec:
               mountPath: /opt/drupal
             - name: drupal-files
               mountPath: /opt/drupal/web/sites/default/files
-
+            - name: drupal-settings
+              mountPath: /opt/drupal/web/sites/default/settings.helm.php
+              subPath: settings.helm.php
       initContainers:
         - name: init-drupal
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
