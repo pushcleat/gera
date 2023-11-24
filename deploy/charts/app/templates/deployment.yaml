@@ -61,9 +61,11 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts: []
-{{/*            - name: drupal-files*/}}
-{{/*              mountPath: /opt/drupal/web/sites/default/files*/}}
+          volumeMounts:
+            - name: drupal
+              mountPath: /opt/drupal
+            - name: drupal-files
+              mountPath: /opt/drupal/web/sites/default/files
 
       initContainers:
         - name: init-drupal
