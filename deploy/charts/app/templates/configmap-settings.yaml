@@ -20,8 +20,8 @@ data:
     $driver = "mysql";
 
     $databases['default']['default']['database'] = "db";
-    $databases['default']['default']['username'] = "db";
-    $databases['default']['default']['password'] = "db";
+    $databases['default']['default']['username'] = "root";
+    $databases['default']['default']['password'] = "root";
     $databases['default']['default']['host'] = $host;
     $databases['default']['default']['driver'] = $driver;
     $databases['default']['default']['port'] = $port;
