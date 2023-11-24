@@ -1,0 +1,8 @@
+uuid: 132483a1-859f-4192-acb6-637b4f9818c9
+langcode: en
+status: true
+dependencies: {  }
+name: Banks
+vid: banks
+description: ''
+weight: 0
