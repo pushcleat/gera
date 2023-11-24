@@ -43,6 +43,9 @@ spec:
           volumeMounts:
             - name: drupal-files
               mountPath: /opt/drupal/web/sites/default/files
+            - name: drupal-settings
+              mountPath: /opt/drupal/web/sites/default/settings.helm.php
+              subPath: settings.helm.php
       volumes:
         - name: drupal-files
           persistentVolumeClaim:
