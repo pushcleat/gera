@@ -43,6 +43,8 @@ spec:
           volumeMounts:
             - name: drupal-files
               mountPath: /opt/drupal/web/sites/default/files
+            - name: drupal-private
+              mountPath: /opt/drupal/web/sites/default/private
             - name: drupal-settings
               mountPath: /opt/drupal/web/sites/default/settings.helm.php
               subPath: settings.helm.php
@@ -50,6 +52,9 @@ spec:
         - name: drupal-files
           persistentVolumeClaim:
             claimName: {{ include "app.fullname" . }}
+        - name: drupal-private
+          persistentVolumeClaim:
+            claimName: {{ include "app.fullname" . }}-private
         - name: drupal-settings
           configMap:
             name: {{ include "app.fullname" . }}-settings

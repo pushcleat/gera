@@ -1,2 +1,5 @@
 default/files/*
 default/files
+default/private/*
+default/private
+!default/private/.gitkeep

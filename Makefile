@@ -1,2 +1,2 @@
 export:
-	ddev drush cex --destination ./sites/default/sync
+	ddev drush cex

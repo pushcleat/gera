@@ -4,8 +4,10 @@ status: true
 dependencies:
   config:
     - field.field.node.request.body
+    - field.field.node.request.field__documents
     - node.type.request
   module:
+    - file
     - path
     - text
 id: node.request.default
@@ -28,6 +30,13 @@ content:
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field__documents:
+    type: file_generic
+    weight: 122
+    region: content
+    settings:
+      progress_indicator: throbber
     third_party_settings: {  }
   path:
     type: path
