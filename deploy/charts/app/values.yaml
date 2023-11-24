@@ -85,3 +85,9 @@ affinity: {}
 
 external_secrets:
   path:
+
+
+
+persistence:
+  accessMode: ReadWriteOnce
+  size: 1Gi
