@@ -59,6 +59,7 @@ spec:
         - name: drupal-migrate
           configMap:
             name: {{ include "app.fullname" . }}-settings
+            defaultMode: 0777
             items:
               - key: migrate
                 path: migrate.sh
