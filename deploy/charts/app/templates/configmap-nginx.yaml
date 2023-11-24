@@ -94,7 +94,7 @@ data:
             #fastcgi_pass unix:/var/run/php5-fpm.sock;
             # PHP 7 socket location.
             #fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+            fastcgi_pass 127.0.0.1:9000;
         }
 
         location ~* \.(js|css|webp|png|jpg|jpeg|gif|ico|svg|eot|ttf|woff|woff2)$ {
