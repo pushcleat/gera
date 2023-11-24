@@ -43,9 +43,6 @@ spec:
           volumeMounts:
             - name: drupal-files
               mountPath: /opt/drupal/web/sites/default/files
-            - name: drupal-settings
-              mountPath: /opt/drupal/migrate.sh
-              subPath: migrate.sh
       volumes:
         - name: drupal-files
           persistentVolumeClaim:
@@ -56,13 +53,6 @@ spec:
             items:
               - key: settings
                 path: settings.helm.php
-        - name: drupal-migrate
-          configMap:
-            name: {{ include "app.fullname" . }}-settings
-            defaultMode: 0777
-            items:
-              - key: migrate
-                path: migrate.sh
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
