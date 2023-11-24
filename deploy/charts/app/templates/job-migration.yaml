@@ -1,62 +1,76 @@
-{{/*apiVersion: batch/v1*/}}
-{{/*kind: Job*/}}
-{{/*metadata:*/}}
-{{/*  name: {{ include "app.fullname" . }}-migrate*/}}
-{{/*  labels:*/}}
-{{/*    {{- include "app.labels" . | nindent 4 }}*/}}
-{{/*  annotations:*/}}
-{{/*    argocd.argoproj.io/hook: Sync*/}}
-{{/*    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation*/}}
-{{/*spec:*/}}
-{{/*  template:*/}}
-{{/*    metadata:*/}}
-{{/*      {{- with .Values.podAnnotations }}*/}}
-{{/*      annotations:*/}}
-{{/*        {{- toYaml . | nindent 8 }}*/}}
-{{/*      {{- end }}*/}}
-{{/*      labels:*/}}
-{{/*        {{- include "app.selectorLabels" . | nindent 8 }}*/}}
-{{/*    spec:*/}}
-{{/*      {{- with .Values.imagePullSecrets }}*/}}
-{{/*      imagePullSecrets:*/}}
-{{/*      {{- range . }}*/}}
-{{/*        - name: {{ . }}*/}}
-{{/*      {{- end }}*/}}
-{{/*      {{- end }}*/}}
-{{/*      serviceAccountName: {{ include "app.serviceAccountName" . }}*/}}
-{{/*      securityContext:*/}}
-{{/*        {{- toYaml .Values.podSecurityContext | nindent 8 }}*/}}
-{{/*      restartPolicy: Never*/}}
-{{/*      containers:*/}}
-{{/*        - name: {{ .Chart.Name }}*/}}
-{{/*          command: [ 'sh', '-c', 'cp -R /opt/drupal/* /drupal/' ]*/}}
-{{/*          securityContext:*/}}
-{{/*            {{- toYaml .Values.securityContext | nindent 12 }}*/}}
-{{/*          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"*/}}
-{{/*          imagePullPolicy: {{ .Values.image.pullPolicy }}*/}}
-{{/*          ports:*/}}
-{{/*            - name: fpm*/}}
-{{/*              containerPort: 9000*/}}
-{{/*              protocol: TCP*/}}
-{{/*          resources:*/}}
-{{/*            {{- toYaml .Values.resources | nindent 12 }}*/}}
-{{/*          volumeMounts:*/}}
-{{/*            - name: drupal*/}}
-{{/*              mountPath: /opt/drupal*/}}
-{{/*            - name: drupal-files*/}}
-{{/*              mountPath: /opt/drupal/web/sites/default/files*/}}
-{{/*            - name: drupal-settings*/}}
-{{/*              mountPath: /opt/drupal/web/sites/default/settings.helm.php*/}}
-{{/*              subPath: settings.helm.php*/}}
-{{/*      {{- with .Values.nodeSelector }}*/}}
-{{/*      nodeSelector:*/}}
-{{/*        {{- toYaml . | nindent 8 }}*/}}
-{{/*      {{- end }}*/}}
-{{/*      {{- with .Values.affinity }}*/}}
-{{/*      affinity:*/}}
-{{/*        {{- toYaml . | nindent 8 }}*/}}
-{{/*      {{- end }}*/}}
-{{/*      {{- with .Values.tolerations }}*/}}
-{{/*      tolerations:*/}}
-{{/*        {{- toYaml . | nindent 8 }}*/}}
-{{/*      {{- end }}*/}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "app.fullname" . }}-migrate
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "app.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: {{ include "app.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}
+          command: [ '/opt/drupal/migrate.sh' ]
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: fpm
+              containerPort: 9000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: drupal-files
+              mountPath: /opt/drupal/web/sites/default/files
+            - name: drupal-settings
+              mountPath: /opt/drupal/migrate.sh
+              subPath: migrate.sh
+      volumes:
+        - name: drupal-files
+          persistentVolumeClaim:
+            claimName: {{ include "app.fullname" . }}
+        - name: drupal-settings
+          configMap:
+            name: {{ include "app.fullname" . }}-settings
+            items:
+              - key: settings
+                path: settings.helm.php
+        - name: drupal-migrate
+          configMap:
+            name: {{ include "app.fullname" . }}-settings
+            items:
+              - key: migrate
+                path: migrate.sh
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

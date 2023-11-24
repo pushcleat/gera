@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "app.labels" . | nindent 4 }}
 data:
+  migrate: |-
+    #!/bin/bash
+    drush config:import --yes
   settings: |-
     <?php
 
