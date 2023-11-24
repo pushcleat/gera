@@ -35,6 +35,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "nginx:1.25.3"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - nginx-debug
+            - '-g'
+            - 'daemon off;'
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
