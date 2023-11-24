@@ -58,10 +58,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: drupal
-              mountPath: /opt/drupal
-            - name: drupal-files
-              mountPath: /opt/drupal/web/sites/default/files
+{{/*            - name: drupal-files*/}}
+{{/*              mountPath: /opt/drupal/web/sites/default/files*/}}
 
       initContainers:
         - name: init-drupal
