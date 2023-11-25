@@ -1,0 +1,17 @@
+
+# Email menu items definition
+entity.easy_email.collection:
+  title: 'Email Log'
+  route_name: entity.easy_email.collection
+  description: 'List all emails created by Easy Email module'
+  parent: system.admin_content
+  weight: 0
+
+
+# Email type menu items definition
+entity.easy_email_type.collection:
+  title: 'Email Templates'
+  route_name: entity.easy_email_type.collection
+  description: 'Manage Email Templates'
+  parent: system.admin_structure
+  weight: 0

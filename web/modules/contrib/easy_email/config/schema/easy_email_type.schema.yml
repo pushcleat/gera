@@ -1,0 +1,82 @@
+easy_email.easy_email_type.*:
+  type: config_entity
+  label: 'Email template config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    key:
+      type: string
+    recipient:
+      type: sequence
+      label: 'Recipients'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Recipient'
+    cc:
+      type: sequence
+      label: 'CC'
+      orderby: key
+      sequence:
+        type: string
+        label: 'CC Recipient'
+    bcc:
+      type: sequence
+      label: 'BCC'
+      orderby: key
+      sequence:
+        type: string
+        label: 'BCC Recipient'
+    fromName:
+      type: string
+      label: 'From Name'
+    fromAddress:
+      type: string
+      label: 'From Address'
+    replyToAddress:
+      type: string
+      label: 'Reply To Address'
+    subject:
+      type: string
+      label: 'Subject'
+    inboxPreview:
+      type: string
+      label: 'Inbox Preview'
+    bodyHtml:
+      type: mapping
+      label: 'HTML Body'
+      mapping:
+        value:
+          type: string
+          label: 'Text Value'
+        format:
+          type: string
+          label: 'Text Format'
+    bodyPlain:
+      type: string
+      label: 'Plain Text Body'
+    generateBodyPlain:
+      type: boolean
+      label: 'Generate Plain Text Body from HTML Body'
+    attachment:
+      type: sequence
+      label: 'Attachments'
+      orderby: key
+      sequence:
+        type: string
+        label: 'Attachment'
+    saveAttachment:
+      type: boolean
+      label: 'Save Attachments'
+    attachmentScheme:
+      type: string
+      label: 'Attachment URI Scheme'
+    attachmentDirectory:
+      type: string
+      label: 'Attachment Directory'

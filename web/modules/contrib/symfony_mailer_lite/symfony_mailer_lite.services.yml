@@ -1,0 +1,4 @@
+services:
+  plugin.manager.symfony_mailer_lite_transport:
+    class: Drupal\symfony_mailer_lite\TransportManager
+    parent: default_plugin_manager

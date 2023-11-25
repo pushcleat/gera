@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Install Easy Email Commerce module if Commerce order receipt overrides are in use.
+ */
+function easy_email_override_update_9001(&$sandbox) {
+  $order_receipt_overrides_count = \Drupal::entityTypeManager()
+    ->getStorage('easy_email_override')
+    ->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('module', 'commerce')
+    ->condition('key', 'order_receipt')
+    ->count()
+    ->execute();
+  if ($order_receipt_overrides_count > 0) {
+    \Drupal::service('module_installer')->install(['easy_email_commerce']);
+  }
+}

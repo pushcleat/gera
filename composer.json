@@ -20,7 +20,10 @@
         "drupal/core-composer-scaffold": "^10.1",
         "drupal/core-project-message": "^10.1",
         "drupal/core-recommended": "^10.1",
+        "drupal/easy_email": "^2.1@beta",
         "drupal/inline_entity_form": "^1.0@RC",
+        "drupal/symfony_mailer": "^1.4",
+        "drupal/symfony_mailer_lite": "^1.0@RC",
         "drupal/token": "^1.13",
         "drush/drush": "^12.4"
     },

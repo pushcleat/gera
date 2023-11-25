@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Implements hook_requirements().
+ */
+function easy_email_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'install' || $phase === 'runtime') {
+    $mailers = [
+      'symfony_mailer' => [
+        'label' => t('Symfony Mailer'),
+        'url' => 'https://www.drupal.org/project/symfony_mailer',
+        'test_class' => 'Drupal\symfony_mailer\Mailer',
+      ],
+      'symfony_mailer_lite' => [
+        'label' => t('Symfony Mailer Lite'),
+        'url' => 'https://www.drupal.org/project/symfony_mailer_lite',
+        'test_class' => 'Drupal\symfony_mailer_lite\Plugin\Mail\SymfonyMailer',
+      ],
+    ];
+    $has_acceptable_mailer = FALSE;
+    foreach ($mailers as $mailer) {
+      if (class_exists($mailer['test_class'])) {
+        $has_acceptable_mailer = TRUE;
+        break;
+      }
+    }
+    if (!$has_acceptable_mailer) {
+      $replacements = [];
+      $mailer_descriptions = [];
+      foreach ($mailers as $key => $mailer) {
+        $mailer_descriptions[] = '<a target="_blank" href=":' . $key . '">@' . $key . '_label</a>';
+        $replacements[':' . $key] = $mailer['url'];
+        $replacements['@' . $key . '_label'] = $mailer['label'];
+      }
+      $requirements['easy_email_mailer'] = [
+        'title' => t('Easy Email mailer module'),
+        'description' => t('Easy Email requires one of the following modules to be installed: '
+          . implode(', ', $mailer_descriptions), $replacements),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Ensure Easy Email's entity revision metadata keys are correct.
+ */
+function easy_email_update_8201() {
+  $entity_definition_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $entity_definition_update_manager->getEntityType('easy_email');
+  $metadata_keys = $entity_type->get('revision_metadata_keys');
+  $metadata_keys = is_array($metadata_keys) ? $metadata_keys : [];
+  $metadata_keys = [
+    'revision_default' => 'revision_default',
+    'revision_user' => 'revision_user',
+    'revision_created' => 'revision_created',
+    'revision_log_message' => 'revision_log_message',
+  ] + $metadata_keys;
+  $entity_type->set('revision_metadata_keys', $metadata_keys);
+  $entity_definition_update_manager->updateEntityType($entity_type);
+}

@@ -1,0 +1,35 @@
+easy_email_override.easy_email_override.*:
+  type: config_entity
+  label: 'Email Override config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
+    module:
+      type: string
+      label: 'Module'
+    key:
+      type: string
+      label: 'Key'
+    easy_email_type:
+      type: string
+      label: 'Easy Email Template'
+    param_map:
+      type: sequence
+      label: 'Parameter Mapping'
+      orderby: key
+      sequence:
+        type: mapping
+        label: 'Parameter Mapping'
+        mapping:
+          source:
+            type: string
+            label: 'Source Field'
+          destination:
+            type: string
+            label: 'Destination Field'

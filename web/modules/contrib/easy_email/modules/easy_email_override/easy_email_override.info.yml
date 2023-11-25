@@ -1,0 +1,14 @@
+name: Easy Email Overrides
+type: module
+description: Provides a system for overridding emails from core and contrib modules with emails generated from Easy Email templates.
+package: Mail
+core_version_requirement: ^9 || ^10
+configure: entity.easy_email_override.collection
+
+dependencies:
+  - easy_email:easy_email
+
+# Information added by Drupal.org packaging script on 2023-06-25
+version: '2.1.0-beta1'
+project: 'easy_email'
+datestamp: 1687710955

@@ -1,0 +1,980 @@
+<?php
+
+use Drupal\Component\Utility\Xss;
+use Drupal\Core\Render\RenderContext;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\easy_email\Entity\EasyEmailTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Entity\EntityStorageException;
+use Drupal\Core\StreamWrapper\StreamWrapperInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+/**
+ * @file
+ * Contains easy_email.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function easy_email_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.easy_email') {
+    $readme_file = file_exists(__DIR__ . '/README.md') ? __DIR__ . '/README.md' : __DIR__ . '/README.txt';
+    if (!file_exists($readme_file)) {
+      return NULL;
+    }
+    $text = file_get_contents($readme_file);
+    if ($text && !\Drupal::moduleHandler()->moduleExists('markdown')) {
+      return '<pre>' . $text . '</pre>';
+    }
+    else {
+      // Use the Markdown filter to render the README.
+      $filter_manager = \Drupal::service('plugin.manager.filter');
+      $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+      $config = ['settings' => $settings];
+      $filter = $filter_manager->createInstance('markdown', $config);
+      return $filter->process($text, 'en');
+    }
+  }
+  return NULL;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function easy_email_theme() {
+  return [
+    'easy_email' => [
+      'render element' => 'elements',
+      'file' => 'easy_email.page.inc',
+      'template' => 'easy-email',
+    ],
+    'easy_email_content_add_list' => [
+      'render element' => 'content',
+      'variables' => ['content' => NULL],
+      'file' => 'easy_email.page.inc',
+    ],
+    'easy_email_body_html' => [
+      'variables' => ['easy_email' => NULL],
+    ],
+    'easy_email_body_plain' => [
+      'variables' => ['easy_email' => NULL],
+    ],
+    'easy_email_body_inbox_preview' => [
+      'variables' => ['easy_email' => NULL],
+    ],
+    'easy_email_inbox_preview_view' => [
+      'variables' => ['easy_email' => NULL],
+    ],
+    'easy_email_type_preview' => [
+      'variables' => ['easy_email' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function easy_email_theme_suggestions_easy_email(array $variables) {
+  $suggestions = [];
+  $entity = $variables['elements']['#easy_email'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'easy_email__' . $sanitized_view_mode;
+  $suggestions[] = 'easy_email__' . $entity->bundle();
+  $suggestions[] = 'easy_email__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'easy_email__' . $entity->id();
+  $suggestions[] = 'easy_email__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function easy_email_theme_suggestions_easy_email_body_html(array $variables) {
+  $suggestions = [];
+  $entity = $variables['easy_email'];
+  $suggestions[] = 'easy_email_body_html__' . $entity->bundle();
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function easy_email_theme_suggestions_easy_email_body_plain(array $variables) {
+  $suggestions = [];
+  $entity = $variables['easy_email'];
+  $suggestions[] = 'easy_email_body_plain__' . $entity->bundle();
+  return $suggestions;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function easy_email_theme_suggestions_easy_email_body_inbox_preview(array $variables) {
+  $suggestions = [];
+  $entity = $variables['easy_email'];
+  $suggestions[] = 'easy_email_body_inbox_preview__' . $entity->bundle();
+  return $suggestions;
+}
+
+/**
+ * Implements hook_mail().
+ */
+function easy_email_mail($key, &$message, $params) {
+  if (!empty($params['easy_email_preview'])) {
+    $message['send'] = FALSE;
+  }
+
+  /** @var \Drupal\Core\Render\RendererInterface $renderer */
+  $renderer = \Drupal::service('renderer');
+  if (isset($params['headers'])) {
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
+  }
+  if (!empty($params['from'])) {
+    $message['from'] = $params['from'];
+  }
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $renderer->render($params['body']);
+  if (!empty($params['plain'])) {
+    $message['plain'] = $renderer->render($params['plain']);
+  }
+}
+
+function template_preprocess_easy_email_body_html(array &$variables) {
+  /** @var \Drupal\easy_email\Entity\EasyEmailInterface $email */
+  $email = $variables['easy_email'];
+  $html_body = $email->getHtmlBody();
+  if (!empty($html_body)) {
+    $variables['body'] = [
+      '#type' => 'processed_text',
+      '#text' => $html_body['value'],
+      '#format' => $html_body['format'],
+    ];
+  }
+}
+
+
+function template_preprocess_easy_email_body_plain(array &$variables) {
+  /** @var \Drupal\easy_email\Entity\EasyEmailInterface $email */
+  $email = $variables['easy_email'];
+  $plain_body = $email->getPlainBody();
+  if (!empty($plain_body)) {
+    $variables['body'] = [
+      '#markup' => Xss::filter($plain_body, [])
+    ];
+  }
+}
+
+function template_preprocess_easy_email_body_inbox_preview(array &$variables) {
+  /** @var \Drupal\easy_email\Entity\EasyEmailInterface $email */
+  $email = $variables['easy_email'];
+  $inbox_preview = $email->getInboxPreview();
+  $variables['body'] = [
+    '#markup' => Xss::filter($inbox_preview, [])
+  ];
+}
+
+function template_preprocess_easy_email_inbox_preview_view(array &$variables) {
+  /** @var \Drupal\easy_email\Entity\EasyEmailInterface $easy_email */
+  $easy_email = $variables['easy_email'];
+  $inbox_preview = $easy_email->getInboxPreview();
+  if (!$easy_email->hasField('body_html') || empty($inbox_preview)) {
+    $inbox_preview = NULL;
+    $html_body = $easy_email->getHtmlBody();
+    if (!empty($html_body)) {
+      $body = [
+        '#type' => 'processed_text',
+        '#text' => $html_body['value'],
+        '#format' => $html_body['format'],
+      ];
+      $renderer = \Drupal::service('renderer');
+      $inbox_preview = $renderer->executeInRenderContext(new RenderContext(), function () use ($renderer, $body) {
+        return $renderer->render($body);
+      });
+    }
+    if (empty($inbox_preview)) {
+      $plain_body = $easy_email->getPlainBody();
+      if (!empty($plain_body)) {
+        $body = [
+          '#plain_text' => $plain_body,
+        ];
+        $renderer = \Drupal::service('renderer');
+        $inbox_preview = $renderer->executeInRenderContext(new RenderContext(), function () use ($renderer, $body) {
+          return $renderer->render($body);
+        });
+      }
+    }
+  }
+  $variables['inbox_preview'] = strip_tags(html_entity_decode($inbox_preview));
+  $variables['subject'] = $easy_email->getSubject();
+  $from = $easy_email->getFromName();
+  if (empty($from)) {
+    $from = $easy_email->getFromAddress();
+  }
+  if (empty($from)) {
+    /** @var \Drupal\Core\Config\ImmutableConfig $site_config */
+    $site_config = \Drupal::config('system.site');
+    $from = $site_config->get('name');
+  }
+  $variables['from_name'] = $from;
+}
+
+/**
+ * Prepares variables for Email entities.
+ *
+ * Default template: easy_email.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the user information and any
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_easy_email_type_preview(array &$variables) {
+  // Fetch EasyEmail Entity Object.
+  /** @var \Drupal\easy_email\Entity\EasyEmailInterface $easy_email */
+  $easy_email = $variables['easy_email'];
+
+  if ($easy_email->hasField('body_html') && !empty($easy_email->getHtmlBody())) {
+    $variables['preview_html_url'] = Url::fromRoute('entity.easy_email_type.preview_html',
+      [
+        'easy_email_type' => $easy_email->bundle(),
+      ],
+      [
+        'query' => [
+          'uuid' => $easy_email->uuid(),
+        ],
+      ]);
+  }
+
+  /** @var \Drupal\easy_email\Entity\EasyEmailTypeInterface $easy_email_type */
+  $easy_email_type = \Drupal::entityTypeManager()->getStorage('easy_email_type')->load($easy_email->bundle());
+
+  if ($easy_email->hasField('body_plain') && (!empty($easy_email_type->getGenerateBodyPlain()) || !empty($easy_email->getPlainBody()))) {
+    $variables['preview_plain_url'] = Url::fromRoute('entity.easy_email_type.preview_plain',
+      [
+        'easy_email_type' => $easy_email->bundle(),
+      ],
+      [
+        'query' => [
+          'uuid' => $easy_email->uuid(),
+        ],
+      ]);
+  }
+
+
+  $variables['headers'] = [];
+
+  /** @var \Drupal\easy_email\Service\EmailHandlerInterface $email_handler */
+  $email_handler = \Drupal::service('easy_email.handler');
+
+  $message = $email_handler->preview($easy_email);
+  if (!empty($message['headers'])) {
+    foreach ($message['headers'] as $header => $value) {
+      $variables['headers'][] = [
+        'name' => $header,
+        'value' => $value,
+      ];
+    }
+  }
+  $recipients = $easy_email->getRecipientAddresses() ?? [];
+  if (!is_array($recipients)) {
+    $recipients = [$recipients];
+  }
+  $variables['headers'][] = [
+    'name' => 'To',
+    'value' => implode(', ', $recipients),
+  ];
+  $variables['headers'][] = [
+    'name' => 'Subject',
+    'value' => $easy_email->getSubject(),
+  ];
+
+  $variables['inbox_preview'] = [
+    '#theme' => 'easy_email_inbox_preview_view',
+    '#easy_email' => $easy_email,
+  ];
+
+  $attachments = [];
+
+  /** @var \Drupal\easy_email\Service\EmailAttachmentEvaluatorInterface $attachment_evalutator */
+  $attachment_evalutator = \Drupal::service('easy_email.attachment_evaluator');
+  $attachment_evalutator->evaluateAttachments($easy_email, FALSE);
+  foreach ($easy_email->getEvaluatedAttachments() as $file) {
+    if (is_object($file)) {
+      $file = (array) $file;
+    }
+    if (empty($file) || (empty($file['uri']) && empty($file['filepath']))) {
+      continue;
+    }
+    $uri = !empty($file['uri']) ? $file['uri'] : $file['filepath'];
+    $attachments[] = Link::fromTextAndUrl($file['filename'], Url::fromUri(\Drupal::service('file_url_generator')->generateAbsoluteString($uri), ['attributes' => ['target' => '_blank']]));
+  }
+
+  if (!empty($attachments)) {
+    $variables['attachments'] = [
+      '#theme' => 'item_list',
+      '#items' => $attachments,
+    ];
+  }
+}
+
+function easy_email_entity_insert(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'easy_email_type' && !\Drupal::isConfigSyncing()) {
+    /** @var \Drupal\easy_email\Entity\EasyEmailTypeInterface $entity */
+    easy_email_field_add_key_field($entity);
+    easy_email_field_add_recipient_uid_field($entity);
+    easy_email_field_add_cc_uid_field($entity);
+    easy_email_field_add_cc_address_field($entity);
+    easy_email_field_add_bcc_uid_field($entity);
+    easy_email_field_add_bcc_address_field($entity);
+    easy_email_field_add_from_name_field($entity);
+    easy_email_field_add_from_address_field($entity);
+    easy_email_field_add_reply_to_field($entity);
+    easy_email_field_add_html_body_field($entity);
+    easy_email_field_add_plain_body_field($entity);
+    easy_email_field_add_inbox_preview_field($entity);
+    easy_email_field_add_attachment_field($entity);
+    easy_email_field_add_attachment_path_field($entity);
+
+  }
+}
+
+function easy_email_field_add_key_field(EasyEmailTypeInterface $easy_email_type) {
+
+  $field_definition = BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('key')
+    ->setLabel(t('Unique Key'))
+    ->setDescription(t('A unique key for this message used to prevent duplicate emails.'))
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_recipient_uid_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition = BaseFieldDefinition::create('entity_reference')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('recipient_uid')
+    ->setLabel(t('Recipients'))
+    ->setRevisionable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setSetting('target_type', 'user')
+    ->setSetting('handler', 'default')
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'author',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_cc_uid_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition = BaseFieldDefinition::create('entity_reference')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('cc_uid')
+    ->setLabel(t('CC'))
+    ->setRevisionable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setSetting('target_type', 'user')
+    ->setSetting('handler', 'default')
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'author',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_cc_address_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition =  BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('cc_address')
+    ->setLabel(t('CC Addresses'))
+    ->setDescription(t('The CC email addresses of the Email entity.'))
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_bcc_uid_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition = BaseFieldDefinition::create('entity_reference')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('bcc_uid')
+    ->setLabel(t('BCC'))
+    ->setRevisionable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setSetting('target_type', 'user')
+    ->setSetting('handler', 'default')
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('view', [
+      'label' => 'hidden',
+      'type' => 'author',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'entity_reference_autocomplete',
+      'weight' => 5,
+      'settings' => [
+        'match_operator' => 'CONTAINS',
+        'size' => '60',
+        'autocomplete_type' => 'tags',
+        'placeholder' => '',
+      ],
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_bcc_address_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition =  BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('bcc_address')
+    ->setLabel(t('BCC Addresses'))
+    ->setDescription(t('The BCC email addresses of the Email entity.'))
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_attachment_field(EasyEmailTypeInterface $easy_email_type) {
+
+  $field_definition = BaseFieldDefinition::create('file')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('attachment')
+    ->setLabel(t('Attachments'))
+    ->setRevisionable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setSetting('file_directory', 'attachments')
+    ->setSetting('file_extensions', 'txt pdf doc docx xls xlsx ppt pptx rtf png jpg jpeg gif')
+    ->setSetting('max_filesize', '')
+    ->setSetting('description_field', FALSE)
+    ->setSetting('handler', 'default')
+    ->setSetting('uri_scheme', 'private')
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('form', [
+      'type' => 'file_generic',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('view', [
+      'type' => 'file_default',
+      'weight' => 0,
+      'label' => 'hidden',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  /** @var \Drupal\Core\StreamWrapper\StreamWrapperManagerInterface $stream_wrapper_manager */
+  $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager');
+  $scheme_options = $stream_wrapper_manager->getNames(StreamWrapperInterface::WRITE_VISIBLE);
+  if (!empty($scheme_options['private'])) {
+    $field_definition->setSetting('uri_scheme', 'private');
+  }
+  elseif (!empty($scheme_options['public'])) {
+    $field_definition->setSetting('uri_scheme', 'public');
+  }
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_html_body_field(EasyEmailTypeInterface $easy_email_type) {
+
+  $field_definition = BaseFieldDefinition::create('text_long')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('body_html')
+    ->setLabel(t('HTML Body'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('form', [
+      'type' => 'text_textarea',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('view', [
+      'type' => 'text_default',
+      'weight' => 0,
+      'label' => 'hidden',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_plain_body_field(EasyEmailTypeInterface $easy_email_type) {
+
+  $field_definition = BaseFieldDefinition::create('string_long')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('body_plain')
+    ->setLabel(t('Plain Text Body'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('view', [
+      'type' => 'basic_string',
+      'weight' => 0,
+      'label' => 'hidden',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_inbox_preview_field(EasyEmailTypeInterface $easy_email_type) {
+
+  $field_definition = BaseFieldDefinition::create('string_long')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('inbox_preview')
+    ->setLabel(t('Inbox Preview'))
+    ->setRevisionable(TRUE)
+    ->setTranslatable(TRUE)
+    ->setDisplayOptions('form', [
+      'type' => 'string_textarea',
+      'weight' => 0,
+    ])
+    ->setDisplayOptions('view', [
+      'type' => 'basic_string',
+      'weight' => 0,
+      'label' => 'hidden',
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_attachment_path_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition = BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('attachment_path')
+    ->setLabel(t('Attachment Paths'))
+    ->setRevisionable(TRUE)
+    ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+    ->setRequired(FALSE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_from_name_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition =  BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('from_name')
+    ->setLabel(t('From Name'))
+    ->setDescription(t('The From name of the Email entity.'))
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_from_address_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition =  BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('from_address')
+    ->setLabel(t('From Address'))
+    ->setDescription(t('The From address of the Email entity.'))
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+function easy_email_field_add_reply_to_field(EasyEmailTypeInterface $easy_email_type) {
+  $field_definition =  BaseFieldDefinition::create('string')
+    ->setTargetEntityTypeId('easy_email')
+    ->setTargetBundle($easy_email_type->id())
+    ->setName('reply_to')
+    ->setLabel(t('Reply To Address'))
+    ->setDescription(t('The reply to address of the Email entity.'))
+    ->setRevisionable(TRUE)
+    ->setSettings([
+      'max_length' => 255,
+      'text_processing' => 0,
+    ])
+    ->setDefaultValue('')
+    ->setDisplayOptions('view', [
+      'label' => 'above',
+      'type' => 'string',
+      'weight' => -4,
+    ])
+    ->setDisplayOptions('form', [
+      'type' => 'string_textfield',
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', TRUE);
+
+  try {
+    easy_email_create_field($field_definition, FALSE);
+  }
+  catch (\RuntimeException $e) {
+    // In this case, field already exists from installation
+  }
+  catch (EntityStorageException $e) {
+    // In this case, field already exists from installation
+  }
+}
+
+/**
+ * Creates a configurable field from the given field definition.
+ *
+ * Borrowed from Drupal Commerce: ConfigurableFieldManager class
+ *
+ * @param \Drupal\Core\Field\BaseFieldDefinition $field_definition
+ *   The field definition.
+ * @param bool $lock
+ *   Whether the created field should be locked.
+ *
+ * @throws \InvalidArgumentException
+ *   Thrown when given an incomplete field definition (missing name,
+ *   target entity type ID, or target bundle).
+ * @throws \RuntimeException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function easy_email_create_field(BaseFieldDefinition $field_definition, $lock = TRUE) {
+  $field_name = $field_definition->getName();
+  $entity_type_id = $field_definition->getTargetEntityTypeId();
+  $bundle = $field_definition->getTargetBundle();
+  if (empty($field_name) || empty($entity_type_id) || empty($bundle)) {
+    throw new \InvalidArgumentException('The passed $field_definition is incomplete.');
+  }
+  // loadByName() is an API that doesn't exist on the storage classes for
+  // the two entity types, so we're using the entity classes directly.
+  $field_storage = FieldStorageConfig::loadByName($entity_type_id, $field_name);
+  $field = FieldConfig::loadByName($entity_type_id, $bundle, $field_name);
+  if (!empty($field)) {
+    throw new \RuntimeException(sprintf('The field "%s" already exists on bundle "%s" of entity type "%s".', $field_name, $bundle, $entity_type_id));
+  }
+
+  // The field storage might already exist if the field was created earlier
+  // on a different bundle of the same entity type.
+  if (empty($field_storage)) {
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => $field_name,
+      'entity_type' => $entity_type_id,
+      'type' => $field_definition->getType(),
+      'cardinality' => $field_definition->getCardinality(),
+      'settings' => $field_definition->getSettings(),
+      'translatable' => $field_definition->isTranslatable(),
+      'locked' => $lock,
+    ]);
+    $field_storage->save();
+  }
+
+  $field = FieldConfig::create([
+    'field_storage' => $field_storage,
+    'bundle' => $bundle,
+    'label' => $field_definition->getLabel(),
+    'required' => $field_definition->isRequired(),
+    'settings' => $field_definition->getSettings(),
+    'translatable' => $field_definition->isTranslatable(),
+    'default_value' => $field_definition->getDefaultValueLiteral(),
+    'default_value_callback' => $field_definition->getDefaultValueCallback(),
+  ]);
+  $field->save();
+
+  // Show the field on default entity displays, if specified.
+  if ($view_display_options = $field_definition->getDisplayOptions('view')) {
+    $view_display = easy_email_get_entity_display($entity_type_id, $bundle, 'view');
+    $view_display->setComponent($field_name, $view_display_options);
+    $view_display->save();
+  }
+  if ($form_display_options = $field_definition->getDisplayOptions('form')) {
+    $form_display = easy_email_get_entity_display($entity_type_id, $bundle, 'form');
+    $form_display->setComponent($field_name, $form_display_options);
+    $form_display->save();
+  }
+}
+
+/**
+ * Gets the entity display for the given entity type and bundle.
+ *
+ * The entity display will be created if missing.
+ *
+ * Borrowed from Drupal Commerce: commerce_get_entity_display()
+ *
+ * @param string $entity_type
+ *   The entity type.
+ * @param string $bundle
+ *   The bundle.
+ * @param string $display_context
+ *   The display context ('view' or 'form').
+ *
+ * @return \Drupal\Core\Entity\Display\EntityDisplayInterface
+ *   The entity display.
+ *
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ */
+function easy_email_get_entity_display($entity_type, $bundle, $display_context) {
+  if (!in_array($display_context, ['view', 'form'])) {
+    throw new \InvalidArgumentException(sprintf('Invalid display_context %s passed to _commerce_product_get_display().', $display_context));
+  }
+
+  $storage = \Drupal::entityTypeManager()->getStorage('entity_' . $display_context . '_display');
+  $display = $storage->load($entity_type . '.' . $bundle . '.default');
+  if (!$display) {
+    $display = $storage->create([
+      'targetEntityType' => $entity_type,
+      'bundle' => $bundle,
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+
+  return $display;
+}

@@ -1,0 +1,35 @@
+administer email types:
+  title: 'Administer email templates'
+  description: 'Allow to access the administration forms to configure email templates.'
+  restrict access: true
+
+add email entities:
+  title: 'Create new Email entities'
+
+administer email entities:
+  title: 'Administer Email entities'
+  description: 'Allow to access the administration form to configure Email entities.'
+  restrict access: true
+
+delete email entities:
+  title: 'Delete Email entities'
+
+edit email entities:
+  title: 'Edit Email entities'
+
+view own email entities:
+  title: 'View own Email entities'
+
+view all email entities:
+  title: 'View all Email entities'
+
+view all email revisions:
+  title: 'View all Email revisions'
+
+revert all email revisions:
+  title: 'Revert all Email revisions'
+  description: 'Role requires permission <em>view Email revisions</em> and <em>edit rights</em> for email entities in question or <em>administer email entities</em>.'
+
+delete all email revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Email revisions</em> and <em>delete rights</em> for email entities in question or <em>administer email entities</em>.'
