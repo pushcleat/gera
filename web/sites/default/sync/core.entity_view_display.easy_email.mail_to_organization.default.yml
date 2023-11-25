@@ -1,0 +1,159 @@
+uuid: 3b4cf842-3557-4a84-b36d-a393176d0f86
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.field.easy_email.mail_to_organization.attachment
+    - field.field.easy_email.mail_to_organization.attachment_path
+    - field.field.easy_email.mail_to_organization.bcc_address
+    - field.field.easy_email.mail_to_organization.bcc_uid
+    - field.field.easy_email.mail_to_organization.body_html
+    - field.field.easy_email.mail_to_organization.body_plain
+    - field.field.easy_email.mail_to_organization.cc_address
+    - field.field.easy_email.mail_to_organization.cc_uid
+    - field.field.easy_email.mail_to_organization.from_address
+    - field.field.easy_email.mail_to_organization.from_name
+    - field.field.easy_email.mail_to_organization.inbox_preview
+    - field.field.easy_email.mail_to_organization.key
+    - field.field.easy_email.mail_to_organization.recipient_uid
+    - field.field.easy_email.mail_to_organization.reply_to
+  module:
+    - file
+    - text
+    - user
+id: easy_email.mail_to_organization.default
+targetEntityType: easy_email
+bundle: mail_to_organization
+mode: default
+content:
+  attachment:
+    type: file_default
+    label: hidden
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  attachment_path:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  bcc_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  bcc_uid:
+    type: author
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  body_html:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  body_plain:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  cc_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  cc_uid:
+    type: author
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  creator_uid:
+    type: author
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  from_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  from_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  inbox_preview:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  key:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  recipient_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  recipient_uid:
+    type: author
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  reply_to:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  subject:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+hidden: {  }
