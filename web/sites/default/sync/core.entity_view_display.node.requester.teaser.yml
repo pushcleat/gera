@@ -1,0 +1,22 @@
+uuid: c12dd9b4-11fc-4128-9b25-a200c1ae3a7e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.requester.field_type
+    - node.type.requester
+  module:
+    - user
+id: node.requester.teaser
+targetEntityType: node
+bundle: requester
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_type: true

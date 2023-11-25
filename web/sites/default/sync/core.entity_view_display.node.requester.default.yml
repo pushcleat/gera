@@ -1,0 +1,28 @@
+uuid: f8e8c713-4cff-42a0-84c8-69f806ba4b9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.requester.field_type
+    - node.type.requester
+  module:
+    - options
+    - user
+id: node.requester.default
+targetEntityType: node
+bundle: requester
+mode: default
+content:
+  field_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

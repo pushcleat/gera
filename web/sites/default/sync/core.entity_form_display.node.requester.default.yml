@@ -1,0 +1,33 @@
+uuid: 2c282f2c-86bd-4ab6-adc4-a28bd615643f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.requester.field_type
+    - node.type.requester
+id: node.requester.default
+targetEntityType: node
+bundle: requester
+mode: default
+content:
+  field_type:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

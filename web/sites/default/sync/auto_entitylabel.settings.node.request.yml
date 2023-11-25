@@ -1,0 +1,9 @@
+status: 2
+pattern: 'Обращение ([node:nid]) - [node:field_bank], [node:field_country]'
+escape: true
+preserve_titles: false
+save: false
+chunk: 50
+dependencies:
+  config:
+    - node.type.request

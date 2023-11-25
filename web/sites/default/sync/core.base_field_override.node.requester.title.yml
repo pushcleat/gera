@@ -1,0 +1,18 @@
+uuid: 37cba010-b864-406e-9b69-ab60f2846c1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.requester
+id: node.requester.title
+field_name: title
+entity_type: node
+bundle: requester
+label: Contact
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

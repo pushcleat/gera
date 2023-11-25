@@ -6,6 +6,9 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.request.body
     - field.field.node.request.field__documents
+    - field.field.node.request.field_bank
+    - field.field.node.request.field_contact
+    - field.field.node.request.field_country
     - node.type.request
   module:
     - text
@@ -30,3 +33,6 @@ content:
     region: content
 hidden:
   field__documents: true
+  field_bank: true
+  field_contact: true
+  field_country: true

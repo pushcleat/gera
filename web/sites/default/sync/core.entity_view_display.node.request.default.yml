@@ -5,6 +5,9 @@ dependencies:
   config:
     - field.field.node.request.body
     - field.field.node.request.field__documents
+    - field.field.node.request.field_bank
+    - field.field.node.request.field_contact
+    - field.field.node.request.field_country
     - node.type.request
   module:
     - file
@@ -29,6 +32,30 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     weight: 102
+    region: content
+  field_bank:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_contact:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_country:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
     region: content
   links:
     settings: {  }
