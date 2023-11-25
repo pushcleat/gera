@@ -14,17 +14,20 @@ module:
   datetime: 0
   dblog: 0
   dynamic_page_cache: 0
+  easy_email: 0
   editor: 0
   field: 0
   field_ui: 0
   file: 0
   filter: 0
-  gera_tgbot: 0
   help: 0
   history: 0
   image: 0
   inline_entity_form: 0
+  jquery_ui: 0
+  jquery_ui_resizable: 0
   link: 0
+  mailsystem: 0
   menu_link_content: 0
   menu_ui: 0
   mysql: 0
@@ -35,6 +38,8 @@ module:
   path_alias: 0
   search: 0
   shortcut: 0
+  symfony_mailer: 0
+  symfony_mailer_lite: 0
   system: 0
   taxonomy: 0
   text: 0
