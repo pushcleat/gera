@@ -2,14 +2,32 @@
 
 namespace Drupal\gera_tgbot\Service;
 
+use Drupal\file\Entity\File;
 use Drupal\node\Entity\Node;
 use Drupal\taxonomy\Entity\Term;
 
 class DraftService
 {
-    public function find(string $userId): ?Node
+    public function find(string $username, bool $reset): ?Node
     {
-        $draftTitle = '[DRAFT] Request from ' . $userId;
+        $lastFinished = $this->findLastFinished($username);
+        $unfinised = $this->findUnfinished($username);
+
+        if ($unfinised && $reset) {
+            $unfinised->delete();
+            return null;
+        }
+
+        if ($lastFinished && !$unfinised && !$reset) {
+            return $lastFinished;
+        }
+
+        return $unfinised;
+    }
+
+    protected function findUnfinished(string $username)
+    {
+        $draftTitle = '[DRAFT] Request from ' . $username;
         $draft = \Drupal::entityTypeManager()
             ->getStorage('node')
             ->loadByProperties(['type' => 'request', 'title' => $draftTitle]);
@@ -17,9 +35,19 @@ class DraftService
         return empty($draft) ? null : reset($draft);
     }
 
-    public function create(Node $contact, string $userId): Node
+    public function findLastFinished(string $username): ?Node
     {
-        $draftTitle = '[DRAFT] Request from ' . $userId;
+        $title =  'Request from @' . $username;
+        $requests = \Drupal::entityTypeManager()
+            ->getStorage('node')
+            ->loadByProperties(['type' => 'request', 'title' => $title]);
+
+        return empty($requests) ? null : end($requests);
+    }
+
+    public function create(Node $contact, string $username): Node
+    {
+        $draftTitle = '[DRAFT] Request from ' . $username;
         $draft = Node::create(['type' => 'request', 'title' => $draftTitle]);
         $draft->set('field_contact', ['target_id' => $contact->id()]);
         $draft->save();
@@ -27,24 +55,50 @@ class DraftService
         return $draft;
     }
 
-    public function attachData(Node $draft, array $data): string
+    public function addData(Node $draft, array $data, ?File $file): string
     {
         $fields = $draft->toArray();
 
-        if (empty($fields['field_country'])) {
-            $this->attachCountry($draft, $data['message']['text']);
+        if (str_starts_with($fields['title'][0]['value'], '[DRAFT]')) {
+            if (empty($fields['field_country'])) {
+                $this->attachCountry($draft, $data['message']['text'] ?? $data['message']['caption'] ?? 'N/A');
 
-            return 'country';
+                return 'country';
+            }
+
+            if (empty($fields['field_bank'])) {
+                $this->attachBank($draft, $data['message']['text'] ?? $data['message']['caption'] ?? 'N/A');
+
+                return 'bank';
+            }
+
+            $draft->set('title', 'Request from @' . $data['message']['chat']['username']);
         }
 
-        if (empty($fields['field_bank'])) {
-            $this->attachBank($draft, $data['message']['text']);
+        $this->addAdditionalData($draft, $data, $file);
+        $draft->save();
 
-            return 'bank';
+        return 'finish';
+    }
+
+    public function addAdditionalData(Node $draft, array $data, $file): string
+    {
+        $fields = $draft->toArray();
+        $now = (new \DateTime())->format('d.m.Y H:i:s');
+        $bodyPrefix = '';
+
+        if (!empty($fields['body'][0]['value'])) {
+            $bodyPrefix .= $fields['body'][0]['value'] . "\n\nUpdated " . $now . "\n";
         }
 
-        $draft->set('body', $data['message']['text']);
-        $draft->set('title', 'Request from @' . $data['message']['chat']['username']);
+        $draft->set('body', $bodyPrefix . ($data['message']['text'] ?? $data['message']['caption']));
+
+        if ($file) {
+            $docs = $fields['field__documents'] ?? [];
+            $docs[] = ['target_id' => $file->id()];
+            $draft->set('field__documents', $docs);
+        }
+
         $draft->save();
 
         return 'finish';
