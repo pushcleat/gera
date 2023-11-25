@@ -1,0 +1,21 @@
+uuid: d20a7a36-464e-43ae-a526-1d3c668bb2a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.cc_address
+id: easy_email.mail_to_organization.cc_address
+field_name: cc_address
+entity_type: easy_email
+bundle: mail_to_organization
+label: 'CC Addresses'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: null
+settings: {  }
+field_type: string

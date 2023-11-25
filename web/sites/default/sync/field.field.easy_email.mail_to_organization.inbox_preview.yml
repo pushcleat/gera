@@ -1,0 +1,19 @@
+uuid: c55e4feb-a6fc-4537-9f80-37576bcdbb9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.inbox_preview
+id: easy_email.mail_to_organization.inbox_preview
+field_name: inbox_preview
+entity_type: easy_email
+bundle: mail_to_organization
+label: 'Inbox Preview'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: null
+settings: {  }
+field_type: string_long

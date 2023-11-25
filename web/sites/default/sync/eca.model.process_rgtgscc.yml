@@ -1,0 +1,248 @@
+uuid: 8e6d47c4-8755-4b3a-b5d2-4fcd8d7fc82c
+langcode: en
+status: true
+dependencies:
+  config:
+    - eca.eca.process_rgtgscc
+id: process_rgtgscc
+label: 'Mail Organization On Comment'
+tags:
+  - untagged
+documentation: ''
+filename: ''
+modeldata: |
+  <?xml version="1.0" encoding="UTF-8"?>
+  <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_rGTGScC" name="Mail Organization On Comment" isExecutable="true">
+      <bpmn2:startEvent id="Event_1bziz56" name="Comment appers" camunda:modelerTemplate="org.drupal.event.content_entity:insert">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="content_entity:insert" />
+          </camunda:properties>
+          <camunda:field name="type">
+            <camunda:string>comment organization</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>Flow_0nonjn6</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="Flow_0nonjn6" sourceRef="Event_1bziz56" targetRef="Activity_1kc38kq" />
+      <bpmn2:task id="Activity_1kc38kq" name="Mail " camunda:modelerTemplate="org.drupal.action.eca_new_entity">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_new_entity" />
+          </camunda:properties>
+          <camunda:field name="token_name">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+          <camunda:field name="type">
+            <camunda:string>easy_email mail_to_organization</camunda:string>
+          </camunda:field>
+          <camunda:field name="langcode">
+            <camunda:string></camunda:string>
+          </camunda:field>
+          <camunda:field name="label">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+          <camunda:field name="published">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="owner" />
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0nonjn6</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1i5ixnt</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:task id="Activity_0d1gbbu" name="Save body" camunda:modelerTemplate="org.drupal.action.eca_set_field_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_set_field_value" />
+          </camunda:properties>
+          <camunda:field name="method">
+            <camunda:string>set:clear</camunda:string>
+          </camunda:field>
+          <camunda:field name="strip_tags">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="trim">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_name">
+            <camunda:string>body_html</camunda:string>
+          </camunda:field>
+          <camunda:field name="save_entity">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_value">
+            <camunda:string>[comment:body]</camunda:string>
+          </camunda:field>
+          <camunda:field name="object">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1i5ixnt</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_07fi3ne</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_1i5ixnt" sourceRef="Activity_1kc38kq" targetRef="Activity_0d1gbbu" />
+      <bpmn2:task id="Activity_1qf5wsd" name="Set to" camunda:modelerTemplate="org.drupal.action.eca_set_field_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_set_field_value" />
+          </camunda:properties>
+          <camunda:field name="method">
+            <camunda:string>set:clear</camunda:string>
+          </camunda:field>
+          <camunda:field name="strip_tags">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="trim">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_name">
+            <camunda:string>recipient_address</camunda:string>
+          </camunda:field>
+          <camunda:field name="save_entity">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_value">
+            <camunda:string>[comment:entity:field_bank:entity:field_email]</camunda:string>
+          </camunda:field>
+          <camunda:field name="object">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_07fi3ne</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_11rqrht</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_07fi3ne" sourceRef="Activity_0d1gbbu" targetRef="Activity_1qf5wsd" />
+      <bpmn2:task id="Activity_1sr9ksg" name="Set From" camunda:modelerTemplate="org.drupal.action.eca_set_field_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_set_field_value" />
+          </camunda:properties>
+          <camunda:field name="method">
+            <camunda:string>set:clear</camunda:string>
+          </camunda:field>
+          <camunda:field name="strip_tags">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="trim">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_name">
+            <camunda:string>from_address</camunda:string>
+          </camunda:field>
+          <camunda:field name="save_entity">
+            <camunda:string>no</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_value">
+            <camunda:string>peredeleanohackaton.noname+[comment:cid]-[comment:entity:nid]@gmail.com</camunda:string>
+          </camunda:field>
+          <camunda:field name="object">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_11rqrht</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1ej0qvo</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_11rqrht" sourceRef="Activity_1qf5wsd" targetRef="Activity_1sr9ksg" />
+      <bpmn2:task id="Activity_1mflkc3" name="Set reply" camunda:modelerTemplate="org.drupal.action.eca_set_field_value">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="eca_set_field_value" />
+          </camunda:properties>
+          <camunda:field name="method">
+            <camunda:string>set:clear</camunda:string>
+          </camunda:field>
+          <camunda:field name="strip_tags">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="trim">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_name">
+            <camunda:string>reply_to</camunda:string>
+          </camunda:field>
+          <camunda:field name="save_entity">
+            <camunda:string>yes</camunda:string>
+          </camunda:field>
+          <camunda:field name="field_value">
+            <camunda:string>peredeleanohackaton.noname+[comment:cid]-[comment:entity:nid]@gmail.com</camunda:string>
+          </camunda:field>
+          <camunda:field name="object">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1ej0qvo</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_14bzwpf</bpmn2:outgoing>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_1ej0qvo" sourceRef="Activity_1sr9ksg" targetRef="Activity_1mflkc3" />
+      <bpmn2:task id="Activity_0jdckrr" name="Send" camunda:modelerTemplate="org.drupal.action.easy_email_send">
+        <bpmn2:extensionElements>
+          <camunda:properties>
+            <camunda:property name="pluginid" value="easy_email_send" />
+          </camunda:properties>
+          <camunda:field name="object">
+            <camunda:string>mail</camunda:string>
+          </camunda:field>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_14bzwpf</bpmn2:incoming>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="Flow_14bzwpf" sourceRef="Activity_1mflkc3" targetRef="Activity_0jdckrr" />
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="sid-bd6e4b42-0705-47f5-82f2-a55f3d20b5ae">
+      <bpmndi:BPMNPlane id="sid-f11e7c30-d71e-491d-bff4-835621b2bf58" bpmnElement="Process_rGTGScC">
+        <bpmndi:BPMNShape id="Event_1bziz56_di" bpmnElement="Event_1bziz56">
+          <dc:Bounds x="212" y="182" width="36" height="36" />
+          <bpmndi:BPMNLabel>
+            <dc:Bounds x="188" y="225" width="85" height="14" />
+          </bpmndi:BPMNLabel>
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1ogaiyy_di" bpmnElement="Activity_1kc38kq">
+          <dc:Bounds x="350" y="160" width="100" height="80" />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0d1gbbu_di" bpmnElement="Activity_0d1gbbu">
+          <dc:Bounds x="490" y="160" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1qf5wsd_di" bpmnElement="Activity_1qf5wsd">
+          <dc:Bounds x="630" y="160" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1sr9ksg_di" bpmnElement="Activity_1sr9ksg">
+          <dc:Bounds x="770" y="160" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_1mflkc3_di" bpmnElement="Activity_1mflkc3">
+          <dc:Bounds x="910" y="160" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="Activity_0jdckrr_di" bpmnElement="Activity_0jdckrr">
+          <dc:Bounds x="1050" y="160" width="100" height="80" />
+          <bpmndi:BPMNLabel />
+        </bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="Flow_0nonjn6_di" bpmnElement="Flow_0nonjn6">
+          <di:waypoint x="248" y="200" />
+          <di:waypoint x="350" y="200" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1i5ixnt_di" bpmnElement="Flow_1i5ixnt">
+          <di:waypoint x="450" y="200" />
+          <di:waypoint x="490" y="200" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_07fi3ne_di" bpmnElement="Flow_07fi3ne">
+          <di:waypoint x="590" y="200" />
+          <di:waypoint x="630" y="200" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_11rqrht_di" bpmnElement="Flow_11rqrht">
+          <di:waypoint x="730" y="200" />
+          <di:waypoint x="770" y="200" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_1ej0qvo_di" bpmnElement="Flow_1ej0qvo">
+          <di:waypoint x="870" y="200" />
+          <di:waypoint x="910" y="200" />
+        </bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="Flow_14bzwpf_di" bpmnElement="Flow_14bzwpf">
+          <di:waypoint x="1010" y="200" />
+          <di:waypoint x="1050" y="200" />
+        </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+  </bpmn2:definitions>

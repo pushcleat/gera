@@ -1,0 +1,19 @@
+uuid: 606eaaa8-0b5c-4493-bfa3-3b09308e2731
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_email
+    - taxonomy.vocabulary.banks
+id: taxonomy_term.banks.field_email
+field_name: field_email
+entity_type: taxonomy_term
+bundle: banks
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

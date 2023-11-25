@@ -1,0 +1,21 @@
+uuid: d3fb98d1-e489-49cb-b3b9-5181e48f7b97
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+id: easy_email.cc_address
+field_name: cc_address
+entity_type: easy_email
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,52 @@
+uuid: 7e59a0a8-4073-44ae-9e6a-d2514a599efb
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.request
+    - node.type.requester
+    - taxonomy.vocabulary.banks
+    - taxonomy.vocabulary.countries
+  module:
+    - contextual
+    - file
+    - node
+    - path
+    - system
+    - taxonomy
+    - toolbar
+    - tour
+_core:
+  default_config_hash: NtMgnXp0miNtJhag07NSjwdCm4zpJwhlDFs1HgyL4wI
+id: content_editor
+label: 'Content editor'
+weight: 2
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content'
+  - 'access content overview'
+  - 'access contextual links'
+  - 'access files overview'
+  - 'access toolbar'
+  - 'access tour'
+  - 'create request content'
+  - 'create requester content'
+  - 'create terms in banks'
+  - 'create terms in countries'
+  - 'create url aliases'
+  - 'delete own files'
+  - 'delete own request content'
+  - 'delete own requester content'
+  - 'edit any request content'
+  - 'edit any requester content'
+  - 'edit own request content'
+  - 'edit own requester content'
+  - 'edit terms in banks'
+  - 'edit terms in countries'
+  - 'revert all revisions'
+  - 'view all revisions'
+  - 'view own unpublished content'
+  - 'view request revisions'
+  - 'view requester revisions'
+  - 'view the administration theme'

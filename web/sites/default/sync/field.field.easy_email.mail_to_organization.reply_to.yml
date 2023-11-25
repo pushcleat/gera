@@ -1,0 +1,21 @@
+uuid: a97049b1-75b1-4447-90a2-a8b89c79ab19
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.reply_to
+id: easy_email.mail_to_organization.reply_to
+field_name: reply_to
+entity_type: easy_email
+bundle: mail_to_organization
+label: 'Reply To Address'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: null
+settings: {  }
+field_type: string

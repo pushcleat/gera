@@ -1,0 +1,21 @@
+uuid: ddcd290c-14ba-45fc-ba1f-55a085322df9
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.cc_uid
+id: easy_email.mail_to_organization.cc_uid
+field_name: cc_uid
+entity_type: easy_email
+bundle: mail_to_organization
+label: CC
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: null
+settings:
+  handler: 'default:user'
+  handler_settings: {  }
+field_type: entity_reference

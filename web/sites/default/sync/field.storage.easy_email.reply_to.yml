@@ -1,0 +1,21 @@
+uuid: 590cb6f7-6bc7-4733-994b-2bbc64d61b58
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+id: easy_email.reply_to
+field_name: reply_to
+entity_type: easy_email
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,27 @@
+uuid: 3beb2d9a-d246-4445-9188-1f078149a68f
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.attachment
+  module:
+    - file
+id: easy_email.mail_to_organization.attachment
+field_name: attachment
+entity_type: easy_email
+bundle: mail_to_organization
+label: Attachments
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: null
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: attachments
+  file_extensions: 'txt pdf doc docx xls xlsx ppt pptx rtf png jpg jpeg gif'
+  max_filesize: ''
+  description_field: false
+field_type: file

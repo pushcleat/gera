@@ -1,0 +1,19 @@
+uuid: 5b7f430c-f4ff-4360-bbbb-e255902e678c
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+    - text
+id: easy_email.body_html
+field_name: body_html
+entity_type: easy_email
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: f69fe086-b1d0-4a67-9a33-09738a919191
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.from_address
+id: easy_email.mail_to_organization.from_address
+field_name: from_address
+entity_type: easy_email
+bundle: mail_to_organization
+label: 'From Address'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ''
+default_value_callback: null
+settings: {  }
+field_type: string

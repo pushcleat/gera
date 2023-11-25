@@ -1,0 +1,114 @@
+uuid: 18b33992-1242-4352-964b-e258cbe0caa0
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.organization
+    - easy_email.easy_email_type.mail_to_organization
+    - field.field.easy_email.mail_to_organization.body_html
+    - field.field.easy_email.mail_to_organization.from_address
+    - field.field.easy_email.mail_to_organization.reply_to
+    - field.storage.easy_email.body_html
+    - field.storage.easy_email.from_address
+    - field.storage.easy_email.reply_to
+  module:
+    - easy_email
+    - eca_content
+id: process_rgtgscc
+modeller: bpmn_io
+label: 'Mail Organization On Comment'
+version: ''
+weight: null
+events:
+  Event_1bziz56:
+    plugin: 'content_entity:insert'
+    label: 'Comment appers'
+    configuration:
+      type: 'comment organization'
+    successors:
+      -
+        id: Activity_1kc38kq
+        condition: ''
+conditions: {  }
+gateways: {  }
+actions:
+  Activity_1kc38kq:
+    plugin: eca_new_entity
+    label: 'Mail '
+    configuration:
+      token_name: mail
+      type: 'easy_email mail_to_organization'
+      langcode: ''
+      label: mail
+      published: true
+      owner: ''
+    successors:
+      -
+        id: Activity_0d1gbbu
+        condition: ''
+  Activity_0d1gbbu:
+    plugin: eca_set_field_value
+    label: 'Save body'
+    configuration:
+      field_name: body_html
+      field_value: '[comment:body]'
+      method: 'set:clear'
+      strip_tags: true
+      trim: true
+      save_entity: false
+      object: mail
+    successors:
+      -
+        id: Activity_1qf5wsd
+        condition: ''
+  Activity_1qf5wsd:
+    plugin: eca_set_field_value
+    label: 'Set to'
+    configuration:
+      field_name: recipient_address
+      field_value: '[comment:entity:field_bank:entity:field_email]'
+      method: 'set:clear'
+      strip_tags: true
+      trim: true
+      save_entity: false
+      object: mail
+    successors:
+      -
+        id: Activity_1sr9ksg
+        condition: ''
+  Activity_1sr9ksg:
+    plugin: eca_set_field_value
+    label: 'Set From'
+    configuration:
+      field_name: from_address
+      field_value: 'peredeleanohackaton.noname+[comment:cid]-[comment:entity:nid]@gmail.com'
+      method: 'set:clear'
+      strip_tags: true
+      trim: true
+      save_entity: false
+      object: mail
+    successors:
+      -
+        id: Activity_1mflkc3
+        condition: ''
+  Activity_1mflkc3:
+    plugin: eca_set_field_value
+    label: 'Set reply'
+    configuration:
+      field_name: reply_to
+      field_value: 'peredeleanohackaton.noname+[comment:cid]-[comment:entity:nid]@gmail.com'
+      method: 'set:clear'
+      strip_tags: true
+      trim: true
+      save_entity: true
+      object: mail
+    successors:
+      -
+        id: Activity_0jdckrr
+        condition: ''
+  Activity_0jdckrr:
+    plugin: easy_email_send
+    label: Send
+    configuration:
+      object: mail
+    successors: {  }

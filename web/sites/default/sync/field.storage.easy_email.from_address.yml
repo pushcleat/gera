@@ -1,0 +1,21 @@
+uuid: 8157afda-4d78-4668-be12-ec10b1c24d91
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+id: easy_email.from_address
+field_name: from_address
+entity_type: easy_email
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

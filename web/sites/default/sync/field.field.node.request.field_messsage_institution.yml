@@ -1,0 +1,33 @@
+uuid: 645f1d54-c2d2-4ab0-b64b-5d7a4a9d128a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_messsage_institution
+    - node.type.request
+  module:
+    - comment
+id: node.request.field_messsage_institution
+field_name: field_messsage_institution
+entity_type: node
+bundle: request
+label: 'Messsage institution'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    status: 2
+    cid: 0
+    last_comment_timestamp: 0
+    last_comment_name: null
+    last_comment_uid: 0
+    comment_count: 0
+default_value_callback: ''
+settings:
+  default_mode: 1
+  per_page: 50
+  anonymous: 0
+  form_location: true
+  preview: 0
+field_type: comment

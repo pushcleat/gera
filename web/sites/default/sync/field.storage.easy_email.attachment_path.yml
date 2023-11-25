@@ -1,0 +1,21 @@
+uuid: d5ad0b30-09a9-4403-9f13-6eb26858b4a3
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+id: easy_email.attachment_path
+field_name: attachment_path
+entity_type: easy_email
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: -1
+translatable: false
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

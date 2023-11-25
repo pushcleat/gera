@@ -1,0 +1,20 @@
+uuid: b74133fc-f225-40c6-85c1-a2b4781b4b39
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+    - node
+id: node.field_messsage_institution
+field_name: field_messsage_institution
+entity_type: node
+type: comment
+settings:
+  comment_type: organization
+module: comment
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,25 @@
+uuid: e4d701a6-ff8f-48ec-ba94-591b4cc969be
+langcode: en
+status: true
+dependencies: {  }
+id: mail_to_organization
+label: 'Mail to organization'
+key: ''
+recipient:
+  - peredeleanohackaton.noname+easymail@gmail.com
+cc: {  }
+bcc: {  }
+fromName: Gera
+fromAddress: peredeleanohackaton.noname@gmail.com
+replyToAddress: peredeleanohackaton.noname+reply@gmail.com
+subject: 'Press comment request'
+inboxPreview: ''
+bodyHtml:
+  value: ''
+  format: basic_html
+bodyPlain: ''
+generateBodyPlain: true
+attachment: {  }
+saveAttachment: false
+attachmentScheme: private
+attachmentDirectory: ''

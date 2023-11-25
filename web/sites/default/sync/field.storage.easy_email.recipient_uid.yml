@@ -1,0 +1,20 @@
+uuid: 3bdc0cfd-2282-4ea4-aa51-258c4ab748d3
+langcode: en
+status: true
+dependencies:
+  module:
+    - easy_email
+    - user
+id: easy_email.recipient_uid
+field_name: recipient_uid
+entity_type: easy_email
+type: entity_reference
+settings:
+  target_type: user
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

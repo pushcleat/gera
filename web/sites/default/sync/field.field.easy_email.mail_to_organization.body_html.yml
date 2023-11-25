@@ -1,0 +1,22 @@
+uuid: 2b1978da-6e71-4830-9331-98a303b83828
+langcode: en
+status: true
+dependencies:
+  config:
+    - easy_email.easy_email_type.mail_to_organization
+    - field.storage.easy_email.body_html
+  module:
+    - text
+id: easy_email.mail_to_organization.body_html
+field_name: body_html
+entity_type: easy_email
+bundle: mail_to_organization
+label: 'HTML Body'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: null
+settings:
+  allowed_formats: {  }
+field_type: text_long

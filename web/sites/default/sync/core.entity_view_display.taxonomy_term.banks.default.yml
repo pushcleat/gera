@@ -1,0 +1,29 @@
+uuid: 8875a8a0-b748-4803-8c79-2f8386935aa9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.banks.field_email
+    - taxonomy.vocabulary.banks
+  module:
+    - text
+id: taxonomy_term.banks.default
+targetEntityType: taxonomy_term
+bundle: banks
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }
