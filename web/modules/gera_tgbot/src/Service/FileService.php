@@ -26,7 +26,7 @@ class FileService
         }
 
         $file = $this->api->downloadAttachment($file);
-        $directory = 'public://uploads/' . (new \DateTime())->format('Y-m-d');
+        $directory = 'private://' . (new \DateTime())->format('Y-m-d');
         /** @var \Drupal\Core\File\FileSystemInterface $filesystem */
         $filesystem = \Drupal::service('file_system');
         $filesystem->prepareDirectory(
