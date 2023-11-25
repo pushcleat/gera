@@ -1,0 +1,6 @@
+gera_tgbot.webhook:
+    path: '/tg/webhook'
+    defaults:
+        _controller: '\Drupal\gera_tgbot\Controller\WebhookController::webhook'
+    requirements:
+        _permission: 'access content'

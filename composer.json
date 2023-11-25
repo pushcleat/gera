@@ -22,7 +22,8 @@
         "drupal/core-recommended": "^10.1",
         "drupal/inline_entity_form": "^1.0@RC",
         "drupal/token": "^1.13",
-        "drush/drush": "^12.4"
+        "drush/drush": "^12.4",
+        "symfony/http-client": "^6.3"
     },
     "conflict": {
         "drupal/drupal": "*"
