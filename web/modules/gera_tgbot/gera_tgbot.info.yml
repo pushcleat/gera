@@ -1,0 +1,5 @@
+name: 'gera-tgbot'
+type: module
+description: 'Telegram Bot for project'
+package: Custom
+core_version_requirement: ^10

@@ -25,7 +25,8 @@
         "drupal/symfony_mailer": "^1.4",
         "drupal/symfony_mailer_lite": "^1.0@RC",
         "drupal/token": "^1.13",
-        "drush/drush": "^12.4"
+        "drush/drush": "^12.4",
+        "symfony/http-client": "^6.3"
     },
     "conflict": {
         "drupal/drupal": "*"
