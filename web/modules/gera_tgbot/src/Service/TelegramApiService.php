@@ -3,6 +3,7 @@
 namespace Drupal\gera_tgbot\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class TelegramApiService
 {
@@ -14,6 +15,17 @@ class TelegramApiService
     public function __construct(protected HttpClientInterface $httpClient)
     {
 
+    }
+
+    public function downloadAttachment(string $attachmentId): ResponseInterface
+    {
+        $data = $this->get('getFile', ['file_id' => $attachmentId]);
+        $file = $this->httpClient->request(
+            'GET',
+            'https://api.telegram.org/file/bot' . self::TOKEN . '/' . $data['result']['file_path']
+        );
+
+        return $file;
     }
 
     public function get(string $apiMethod, array $queryParameters = null)
