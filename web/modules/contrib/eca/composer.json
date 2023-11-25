@@ -1,0 +1,35 @@
+{
+  "name": "drupal/eca",
+  "license": "GPL-2.0-or-later",
+  "type": "drupal-module",
+  "description": "Event, Conditions, Actions - powerful, versatile, and user-friendly rules engine for Drupal",
+  "support": {
+    "issues": "https://drupal.org/project/issues/eca",
+    "source": "https://drupal.org/project/eca"
+  },
+  "require": {
+    "php": ">=7.4",
+    "ext-dom": "*",
+    "ext-json": "*",
+    "dragonmantank/cron-expression": "^3.1",
+    "mtownsend/xml-to-array": "^2.0"
+  },
+  "require-dev": {
+    "drupal/token": "^1.10"
+  },
+  "suggest": {
+    "drupal/eca_state_machine": "Integrates ECA with State Machine functionality",
+    "drupal/eca_tamper": "Integrates ECA with the Tamper API",
+    "drupal/context_stack": "Integrates ECA with Context Stacks for more fine-grained control",
+    "drupal/entity_share": "Integrates ECA with Entity Share functionality",
+    "drupal/group_action": "Integrates ECA with Group Actions if you're using groups",
+    "drupal/token": "Provides the token browser in the UI and offers more token values"
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9 || ^10 || ^11"
+      }
+    }
+  }
+}

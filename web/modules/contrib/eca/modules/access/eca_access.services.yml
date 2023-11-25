@@ -1,0 +1,9 @@
+services:
+  eca_access.subscriber:
+    class: Drupal\eca_access\EventSubscriber\EcaAccess
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }
+  eca_access.hook_handler:
+    class: Drupal\eca_access\HookHandler
+    arguments: ['@eca.trigger_event']

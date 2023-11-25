@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * ECA User submodule.
+ */
+
+use Drupal\Core\Session\AccountInterface;
+use Drupal\eca_user\HookHandler;
+use Drupal\user\UserInterface;
+
+/**
+ * Helper function to return the hook handler service.
+ *
+ * @return \Drupal\eca_user\HookHandler
+ *   The hook handler service.
+ */
+function _eca_user_hook_handler(): HookHandler {
+  return \Drupal::service('eca_user.hook_handler');
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function eca_user_user_login(UserInterface $account) {
+  _eca_user_hook_handler()->login($account);
+}
+
+/**
+ * Implements hook_user_logout().
+ */
+function eca_user_user_logout(AccountInterface $account) {
+  _eca_user_hook_handler()->logout($account);
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function eca_user_user_cancel($edit, UserInterface $account, $method) {
+  _eca_user_hook_handler()->cancel($edit, $account, $method);
+}

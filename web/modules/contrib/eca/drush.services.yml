@@ -1,0 +1,6 @@
+services:
+  eca.commands:
+    class: Drupal\eca\Commands\EcaCommands
+    arguments: ['@entity_type.manager', '@eca.service.modeller']
+    tags:
+      - { name: drush.command }

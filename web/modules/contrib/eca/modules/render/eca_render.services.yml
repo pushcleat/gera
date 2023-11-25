@@ -1,0 +1,6 @@
+services:
+  eca_render.subscriber:
+    class: Drupal\eca_render\EventSubscriber\EcaRender
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }

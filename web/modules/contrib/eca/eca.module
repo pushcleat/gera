@@ -1,0 +1,30 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\eca\PluginManager\Action;
+
+/**
+ * @file
+ * ECA module file.
+ */
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for action entities.
+ */
+function eca_action_insert(EntityInterface $entity) {
+  Action::get()->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for action entities.
+ */
+function eca_action_update(EntityInterface $entity) {
+  Action::get()->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for action entities.
+ */
+function eca_action_delete(EntityInterface $entity) {
+  Action::get()->clearCachedDefinitions();
+}

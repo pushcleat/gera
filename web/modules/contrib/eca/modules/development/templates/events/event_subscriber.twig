@@ -1,0 +1,24 @@
+{{ phpprefix|raw }}
+
+namespace Drupal\{{ machine_name }}\EventSubscriber;
+
+use Drupal\eca\EventSubscriber\EcaBase;
+use Drupal\{{ machine_name }}\Plugin\ECA\Event\EcaEvent;
+
+/**
+ * {{ machine_name }} event subscriber.
+ */
+class EcaEventSubscriber extends EcaBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getSubscribedEvents(): array {
+    $events = [];
+    foreach (EcaEvent::definitions() as $definition) {
+      $events[$definition['event_name']][] = ['onEvent'];
+    }
+    return $events;
+  }
+
+}

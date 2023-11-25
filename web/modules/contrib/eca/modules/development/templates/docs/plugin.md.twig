@@ -1,0 +1,23 @@
+---
+title: "{{ label|raw }}"
+tags:
+- {{ type }}
+- {{ provider }}
+---
+# {{ label|raw }}
+
+{{ description|raw }}
+
+{!include/plugins/{{ idfs }}.md!}
+
+{% if fields %}
+## Fields
+{% for field in fields %}
+
+`{{ field.label|raw }}`
+
+:   {{ field.description|raw }}
+
+    {!include/fields/{{ idfs }}/{{ field.name }}.md!}
+{% endfor %}
+{% endif %}

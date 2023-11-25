@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install file for the ECA Form submodule.
+ */
+
+use Drupal\eca_modeller_bpmn\ModellerBpmnBase;
+
+/**
+ * Update token "current-form" to "current_form".
+ */
+function eca_form_update_8001(): void {
+  $storage = \Drupal::entityTypeManager()->getStorage('eca');
+  /**
+   * @var \Drupal\eca\Entity\Eca $eca
+   */
+  foreach ($storage->loadMultiple() as $eca) {
+    $model = $eca->getModel();
+    if ($eca->getModeller() instanceof ModellerBpmnBase) {
+      $xml = $model->getModeldata();
+      $xml = str_replace('[current-form', '[current_form', $xml);
+      $model
+        ->setModeldata($xml)
+        ->save();
+    }
+    else {
+      foreach (['event', 'condition', 'action'] as $type) {
+        $items = $eca->get($type . 's') ?? [];
+        foreach ($items as &$item) {
+          foreach ($item['configuration'] as $key => $value) {
+            $item[$key] = str_replace('[current-form', '[current_form', $value);
+          }
+        }
+        $eca->set($type . 's', $items);
+      }
+      $eca->save();
+    }
+  }
+}

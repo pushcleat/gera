@@ -1,0 +1,12 @@
+name: 'ECA Queue'
+type: module
+description: 'Events, conditions and actions for queued operations'
+core_version_requirement: ^9 || ^10
+package: ECA
+dependencies:
+  - eca:eca
+
+# Information added by Drupal.org packaging script on 2023-07-14
+version: '1.1.4'
+project: 'eca'
+datestamp: 1689338283

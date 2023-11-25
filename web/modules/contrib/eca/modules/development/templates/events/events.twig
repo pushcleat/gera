@@ -1,0 +1,19 @@
+{{ phpprefix|raw }}
+
+namespace Drupal\{{ machine_name }};
+
+/**
+ * Defines events provided by the {{ machine_name }} module.
+ */
+final class EcaEvents {
+
+  /**
+   * Describes the event.
+   *
+   * @Event
+   *
+   * @var string
+   */
+  public const IDENTIFIER1 = '{{ machine_name }}.id1';
+
+}

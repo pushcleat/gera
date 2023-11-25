@@ -1,0 +1,7 @@
+services:
+
+  eca_migrate.subscriber:
+    class: Drupal\eca_migrate\EventSubscriber\EcaMigrate
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,18 @@
+services:
+  eca_development.docs.commands:
+    class: Drupal\eca_development\Commands\DocsCommands
+    arguments: ['@entity_type.manager', '@eca.service.action', '@eca.service.condition', '@eca.service.modeller', '@file_system', '@module_handler']
+    tags:
+      - { name: drush.command }
+  eca_development.generator.events:
+    class: Drupal\eca_development\Generators\EventsGenerator
+    tags:
+      -  { name: drush.generator.v2 }
+  eca_development.generator.condition:
+    class: Drupal\eca_development\Generators\ConditionGenerator
+    tags:
+      -  { name: drush.generator.v2 }
+  eca_development.generator.action:
+    class: Drupal\eca_development\Generators\ActionGenerator
+    tags:
+      -  { name: drush.generator.v2 }

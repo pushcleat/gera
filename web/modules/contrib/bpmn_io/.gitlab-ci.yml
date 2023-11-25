@@ -1,0 +1,19 @@
+include:
+  - remote: 'https://gitlab.lakedrops.com/gitlab-ci-cd/drupal/-/raw/main/mr-proposed-changes.yml'
+  - template: Code-Quality.gitlab-ci.yml
+
+code_quality:
+  variables:
+    CODE_QUALITY_IMAGE: registry.lakedrops.com/docker/code-climate-drupal/code-climate-drupal
+  artifacts:
+    paths:
+      - gl-code-quality-report.json
+  rules:
+    - when: never
+
+BuildExampleApp:
+  extends: '.mr-proposed-changes'
+  script:
+    - cd build
+    - npm update
+    - npm run all

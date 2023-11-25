@@ -1,0 +1,6 @@
+bpmn_io.add:
+  path: '/admin/config/workflow/eca/add/bpmn-io'
+  defaults:
+    _controller: '\Drupal\bpmn_io\Controller\BpmnIo::add'
+  requirements:
+    _permission: 'edit bpmn io diagram'

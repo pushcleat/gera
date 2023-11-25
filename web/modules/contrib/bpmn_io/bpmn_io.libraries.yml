@@ -1,0 +1,34 @@
+core:
+  remote: https://github.com/bpmn-io/bpmn-js
+  version: 13.2.2
+  js:
+    webpack/bpmn-modeller.js: { preprocess: false }
+  css:
+    component:
+      webpack/vendor/bpmn-js/assets/bpmn-js.css: {}
+      webpack/vendor/bpmn-js/assets/diagram-js.css: {}
+      webpack/vendor/bpmn-js/assets/bpmn-font/css/bpmn.css: {}
+      webpack/vendor/bpmn-js/assets/bpmn-font/css/bpmn-codes.css: {}
+      webpack/vendor/bpmn-js/assets/bpmn-font/css/bpmn-embedded.css: {}
+      webpack/vendor/bpmn-js-element-templates/assets/element-templates.css: {}
+      webpack/vendor/bpmn-js-element-templates/assets/properties-panel.css: {}
+      webpack/vendor/bpmn-js-properties-panel/assets/properties-panel.css: {}
+      webpack/vendor/bpmn-js-properties-panel/assets/element-templates.css: {}
+      webpack/vendor/bpmn-js-properties-panel/assets/element-template-chooser.css: {}
+  license:
+    name: MIT
+    url: https://github.com/bpmn-io/bpmn-js/raw/develop/LICENSE
+    gpl-compatible: true
+
+ui:
+  js:
+    js/bpmn_io.js: {}
+  css:
+    component:
+      css/bpmn_io.css: {}
+  dependencies:
+    - bpmn_io/core
+    - core/drupal.ajax
+    - core/drupal.message
+    - core/drupalSettings
+    - core/jquery

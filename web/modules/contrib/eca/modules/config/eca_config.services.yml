@@ -1,0 +1,13 @@
+services:
+
+  eca_config.subscriber:
+    class: Drupal\eca_config\EventSubscriber\EcaConfig
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }
+
+  eca_config.execution.config_subscriber:
+    class: Drupal\eca_config\EventSubscriber\EcaExecutionConfigSubscriber
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,6 @@
+services:
+  eca_test_array.subscriber:
+    class: Drupal\eca_test_array\EventSubscriber\ArrayEventSubscriber
+    parent: eca.default_event_subscriber
+    tags:
+      - { name: event_subscriber }

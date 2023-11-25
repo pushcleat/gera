@@ -1,0 +1,28 @@
+{{ phpprefix|raw }}
+
+namespace Drupal\{{ machine_name }}\Event;
+
+use Drupal\Component\EventDispatcher\Event;
+
+/**
+ * Provides an event for {{ machine_name }}.
+ *
+ * @package Drupal\{{ machine_name }}\Event
+ */
+class MyEvent extends Event {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function appliesForLazyLoadingWildcard(string $wildcard): bool {
+    return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function applies(string $id, array $arguments): bool {
+    return TRUE;
+  }
+
+}

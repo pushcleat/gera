@@ -1,0 +1,33 @@
+---
+title: ECA Library - {{ label }}
+version: {{ version }}
+tags:
+- bpmn
+- library
+{% for tag in tags %}
+- {{ tag }}
+{% endfor %}
+---
+# {{ label }}
+
+<script>url='{{ model_filename }}.xml';archive='{{ model_filename }}.tar.gz'</script>
+{!include/library/viewer.html!}
+
+## Purpose
+
+{{ documentation }}
+
+## Dependencies
+
+{% for type, items in dependencies %}
+- {{ type }}
+{% for dependency in items %}
+    - {{ dependency }}
+{% endfor %}
+{% endfor %}
+
+## Events
+
+{% for event in events %}
+- {{ event }}
+{% endfor %}

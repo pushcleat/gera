@@ -1,0 +1,22 @@
+{% block toolbar %}
+    {% set status = 'green' %}
+    {% set icon %}
+        {{ include('@eca_ui/Icon/logo.svg') }}
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Log entries</b>
+            <span>{{ collector.numberoflogentries }}</span>
+        </div>
+        <div class="sf-toolbar-info-piece">
+            <b>Token</b>
+            <span>{{ token }}</span>
+        </div>
+    {% endset %}
+    {{ include('@webprofiler/Profiler/toolbar_item.html.twig', { link: profiler_url, status: status|default('') }) }}
+{% endblock %}
+
+{% block panel %}
+    {{ collector.panel() }}
+{% endblock %}

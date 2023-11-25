@@ -1,0 +1,11 @@
+services:
+
+  eca_ui.service.token_browser:
+    class: Drupal\eca_ui\Service\TokenBrowserService
+    arguments: ['@module_handler']
+
+  webprofiler.eca_ui:
+    class: Drupal\eca_ui\DataCollector\EcaDataCollector
+    arguments: ['@logger.channel.eca']
+    tags:
+      - { name: data_collector, template: '@eca_ui/Collector/eca.html.twig', id: 'eca', label: 'ECA', title: 'ECA', priority: 12 }
