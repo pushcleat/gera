@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - filter.format.restricted_html
+    - node.type.request
   module:
     - comment
     - filter
+    - node
     - search
     - system
 _core:
@@ -18,5 +20,6 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
+  - 'create request content'
   - 'search content'
   - 'use text format restricted_html'

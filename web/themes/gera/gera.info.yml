@@ -1,0 +1,10 @@
+name: gera
+type: theme
+'base theme': stable9
+starterkit: true
+version: VERSION
+libraries:
+  - gera/base
+  - core/normalize
+core_version_requirement: ^10
+generator: 'starterkit_theme:10.1.6'
