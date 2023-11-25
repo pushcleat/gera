@@ -36,7 +36,7 @@ class WebhookController
         $body = $request->toArray();
         $draft = $this->draftService->find(
             $body['message']['chat']['username'],
-            trim($body['message']['text']) === '/start'
+            trim($body['message']['text'] ?? '') === '/start'
         );
         $file = $this->fileService->attach($body);
 
