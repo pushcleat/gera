@@ -1,18 +1,16 @@
-uuid: 5c6c4e19-ba45-48c8-a261-efc35c2590c5
+uuid: b74133fc-f225-40c6-85c1-a2b4781b4b39
 langcode: en
 status: true
 dependencies:
   module:
     - comment
     - node
-_core:
-  default_config_hash: ktCna9xmWvYZIUfOCUyDQvedn5RtnS4CRmEIwNmvYjc
-id: node.comment
-field_name: comment
+id: node.field_messsage_institution
+field_name: field_messsage_institution
 entity_type: node
 type: comment
 settings:
-  comment_type: comment
+  comment_type: organization
 module: comment
 locked: false
 cardinality: 1

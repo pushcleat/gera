@@ -9,6 +9,8 @@ dependencies:
     - field.field.node.request.field_bank
     - field.field.node.request.field_contact
     - field.field.node.request.field_country
+    - field.field.node.request.field_message_requester
+    - field.field.node.request.field_messsage_institution
     - node.type.request
   module:
     - text
@@ -36,3 +38,5 @@ hidden:
   field_bank: true
   field_contact: true
   field_country: true
+  field_message_requester: true
+  field_messsage_institution: true

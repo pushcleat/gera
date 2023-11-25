@@ -1,18 +1,16 @@
-uuid: c5617a0d-6e11-4d63-a2f2-27b8aa204378
+uuid: 9224900c-21c1-47aa-b4b5-15c4bd9bc881
 langcode: en
 status: true
 dependencies:
   config:
-    - comment.type.comment
+    - comment.type.organization
     - field.storage.comment.comment_body
   module:
     - text
-_core:
-  default_config_hash: 62rlTOx3sPVrYhBnSBHZStXwiO02v1UpHSMrhWDsuG8
-id: comment.comment.comment_body
+id: comment.organization.comment_body
 field_name: comment_body
 entity_type: comment
-bundle: comment
+bundle: organization
 label: Comment
 description: ''
 required: true

@@ -1,0 +1,27 @@
+uuid: 12e51e5c-abce-4d60-8922-d64f886f84ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.requester
+    - field.field.comment.requester.comment_body
+  module:
+    - text
+id: comment.requester.default
+targetEntityType: comment
+bundle: requester
+mode: default
+content:
+  comment_body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

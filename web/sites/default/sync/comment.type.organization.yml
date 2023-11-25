@@ -1,0 +1,8 @@
+uuid: c6efc966-fef7-40dc-add8-d72ce7169bf6
+langcode: en
+status: true
+dependencies: {  }
+id: organization
+label: Organization
+target_entity_type_id: node
+description: ''

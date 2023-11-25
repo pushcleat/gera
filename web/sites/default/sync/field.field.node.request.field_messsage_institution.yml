@@ -1,22 +1,20 @@
-uuid: 8d5d6b82-5fe1-4edd-8a98-caa404be172f
+uuid: 645f1d54-c2d2-4ab0-b64b-5d7a4a9d128a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.comment
-    - node.type.article
+    - field.storage.node.field_messsage_institution
+    - node.type.request
   module:
     - comment
-_core:
-  default_config_hash: UqXlkKC4v2-bDfWx4zcXQrD5YIi3d5byENEmWv-G_Uc
-id: node.article.comment
-field_name: comment
+id: node.request.field_messsage_institution
+field_name: field_messsage_institution
 entity_type: node
-bundle: article
-label: Comments
+bundle: request
+label: 'Messsage institution'
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value:
   -
     status: 2
@@ -31,5 +29,5 @@ settings:
   per_page: 50
   anonymous: 0
   form_location: true
-  preview: 1
+  preview: 0
 field_type: comment

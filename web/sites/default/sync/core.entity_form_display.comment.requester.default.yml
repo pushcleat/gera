@@ -1,22 +1,22 @@
-uuid: 1fd00ce6-7353-4be8-b100-a42588bd6d81
+uuid: c29b3e84-431a-46b1-b8ce-cc20a8c8f0d7
 langcode: en
 status: true
 dependencies:
   config:
-    - comment.type.comment
-    - field.field.comment.comment.comment_body
+    - comment.type.requester
+    - field.field.comment.requester.comment_body
   module:
     - text
-_core:
-  default_config_hash: I0Pa0aQvT_jawlPo9oz4FE3h_ickc55dYKTPl6gILes
-id: comment.comment.default
+id: comment.requester.default
 targetEntityType: comment
-bundle: comment
+bundle: requester
 mode: default
 content:
   author:
     weight: -2
     region: content
+    settings: {  }
+    third_party_settings: {  }
   comment_body:
     type: text_textarea
     weight: 11
