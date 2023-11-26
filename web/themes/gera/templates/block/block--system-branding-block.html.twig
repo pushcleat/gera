@@ -18,7 +18,8 @@
     'block',
     'block-' ~ configuration.provider|clean_class,
     'block-' ~ plugin_id|clean_class,
-    'navbar-brand',
+    'uk-padding-small',
+    'uk-width-small',
   ]
 %}
 
@@ -29,14 +30,9 @@
   {% endif %}
   {{ title_suffix }}
   {% if site_logo %}
-    <a href="{{ path('<front>') }}" rel="home" class="site-logo navbar-item">
+    <a href="{{ path('<front>') }}" rel="home" class="uk-navbar-item uk-logo">
       <img src="{{ site_logo }}" alt="{{ 'Home'|t }}" />
     </a>
   {% endif %}
 
-  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-    <span aria-hidden="true"></span>
-  </a>
 </div>

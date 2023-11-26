@@ -2,5 +2,11 @@ base:
   version: VERSION
   css:
     base:
-      'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css': { type: external, minified: true }
+      uikit/css/uikit.min.css: { minified: true }
       css/styles.css: {}
+  js:
+    uikit/js/uikit.min.js: {}
+    js/scripts.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

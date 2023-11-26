@@ -18,9 +18,9 @@
     'form-textarea',
     resizable ? 'resize-' ~ resizable,
     required ? 'required',
-    'textarea',
+    'uk-textarea',
   ]
 %}
-<div{{ wrapper_attributes.addClass('form-textarea-wrapper', 'control') }}>
+<div{{ wrapper_attributes.addClass('form-textarea-wrapper', 'uk-form-controls') }}>
   <textarea{{ attributes.addClass(classes) }}>{{ value }}</textarea>
 </div>

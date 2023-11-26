@@ -53,7 +53,7 @@
     'js-form-item-' ~ name|clean_class,
     'form-item-' ~ name|clean_class,
     title_display not in ['after', 'before'] ? 'form-no-label',
-    'field',
+    'uk-margin',
     disabled == 'disabled' ? 'form-disabled',
     errors ? 'form-item--error',
   ]
@@ -61,7 +61,8 @@
 {%
   set description_classes = [
     'description',
-    'help',
+    'uk-text-muted',
+    'uk-text-small',
     description_display == 'invisible' ? 'visually-hidden',
   ]
 %}
