@@ -5,6 +5,14 @@ dependencies:
   config:
     - field.field.node.requester.field_type
     - node.type.requester
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: node.requester.default
 targetEntityType: node
 bundle: requester

@@ -7,8 +7,15 @@ dependencies:
     - field.field.node.homepage.body
     - node.type.homepage
   module:
+    - field_layout
+    - layout_discovery
     - text
     - user
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: node.homepage.teaser
 targetEntityType: node
 bundle: homepage

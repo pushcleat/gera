@@ -6,7 +6,14 @@ dependencies:
     - comment.type.requester
     - field.field.comment.requester.comment_body
   module:
+    - field_layout
+    - layout_discovery
     - text
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: comment.requester.default
 targetEntityType: comment
 bundle: requester

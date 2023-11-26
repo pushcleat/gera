@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_display.comment.organization.default
     - field.field.node.request.body
     - field.field.node.request.field__documents
     - field.field.node.request.field_bank
@@ -13,9 +14,16 @@ dependencies:
     - node.type.request
   module:
     - comment
+    - field_layout
     - file
+    - layout_discovery
     - text
     - user
+third_party_settings:
+  field_layout:
+    id: layout_twocol_bricks
+    settings:
+      label: ''
 id: node.request.default
 targetEntityType: node
 bundle: request
@@ -26,40 +34,41 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 101
-    region: content
+    weight: 1
+    region: first_above
   field__documents:
-    type: file_default
+    type: file_table
     label: above
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 102
-    region: content
+    weight: 5
+    region: second_above
   field_bank:
-    type: entity_reference_label
+    type: entity_reference_entity_view
     label: above
     settings:
+      view_mode: default
       link: true
     third_party_settings: {  }
-    weight: 103
-    region: content
+    weight: 3
+    region: second_above
   field_contact:
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
-    weight: 105
-    region: content
+    weight: 4
+    region: second_above
   field_country:
     type: entity_reference_label
-    label: above
+    label: inline
     settings:
       link: true
     third_party_settings: {  }
-    weight: 104
-    region: content
+    weight: 2
+    region: second_above
   field_message_requester:
     type: comment_default
     label: above
@@ -67,8 +76,8 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 106
-    region: content
+    weight: 6
+    region: first_below
   field_messsage_institution:
     type: comment_default
     label: above
@@ -76,11 +85,11 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 107
-    region: content
+    weight: 7
+    region: second_below
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
-    region: content
+    weight: 0
+    region: top
 hidden: {  }

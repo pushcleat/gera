@@ -19,8 +19,15 @@ dependencies:
     - field.field.easy_email.mail_to_organization.recipient_uid
     - field.field.easy_email.mail_to_organization.reply_to
   module:
+    - field_layout
     - file
+    - layout_discovery
     - text
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: easy_email.mail_to_organization.default
 targetEntityType: easy_email
 bundle: mail_to_organization

@@ -13,8 +13,15 @@ dependencies:
     - field.field.node.request.field_messsage_institution
     - node.type.request
   module:
+    - field_layout
+    - layout_discovery
     - text
     - user
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: node.request.teaser
 targetEntityType: node
 bundle: request

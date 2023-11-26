@@ -6,7 +6,14 @@ dependencies:
     - field.field.taxonomy_term.banks.field_email
     - taxonomy.vocabulary.banks
   module:
+    - field_layout
+    - layout_discovery
     - text
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
 id: taxonomy_term.banks.default
 targetEntityType: taxonomy_term
 bundle: banks
