@@ -1,0 +1,21 @@
+uuid: 59f0974d-dd6b-4cb5-86f5-4652630a35cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.countries
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
+id: taxonomy_term.countries.default
+targetEntityType: taxonomy_term
+bundle: countries
+mode: default
+content: {  }
+hidden:
+  description: true
