@@ -18,3 +18,7 @@
 .ui-menu .ui-menu-item-wrapper {
   display: block;
 }
+
+.feed-icons {
+  display: none;
+}
