@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a three column layout.
+ *
+ * This template provides a three column 25%-50%-25% display layout, with
+ * additional areas for the top and the bottom.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'layout',
+    'layout--threecol-25-50-25',
+  ]
+%}
+{% if content %}
+  <div{{ attributes.addClass(classes) }}>
+    {% if content.group.top %}
+      <div {{ attributes.addClass('layout__region', 'layout__region--top') }}>
+        {{ content.group.top }}
+      </div>
+    {% endif %}
+
+    {% if content.group.first %}
+      <div {{ attributes.addClass('layout__region', 'layout__region--first') }}>
+        {{ content.group.first }}
+      </div>
+    {% endif %}
+
+    {% if content.group.second %}
+      <div {{ attributes.addClass('layout__region', 'layout__region--second') }}>
+        {{ content.group.second }}
+      </div>
+    {% endif %}
+
+    {% if content.group.third %}
+      <div {{ attributes.addClass('layout__region', 'layout__region--third') }}>
+        {{ content.group.third }}
+      </div>
+    {% endif %}
+
+    {% if content.group.bottom %}
+      <div {{ attributes.addClass('layout__region', 'layout__region--bottom') }}>
+        {{ content.group.bottom }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

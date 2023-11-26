@@ -1,0 +1,147 @@
+<?php
+
+/**
+ * @file
+ * Basic module file.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function field_group_layout_theme($existing, $type, $theme, $path) {
+  $all_layouts = \Drupal::service('plugin.manager.core.layout')
+    ->getThemeImplementations();
+  if ($all_layouts) {
+    foreach ($all_layouts as $layout_key => $layout_schema) {
+      $all_layouts[$layout_key]['group'] = NULL;
+      $all_layouts[$layout_key]['file'] = 'templates/theme.inc';
+    }
+  }
+  return [
+    'field_group_layouts' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-twocol',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+    'field_group__layout_onecol' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-onecol',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+    'field_group__layout_twocol' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-twocol',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+    'field_group__layout_twocol_bricks' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-twocol-bricks',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+    'field_group__layout_threecol_25_50_25' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-threecol-25-50-25',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+    'field_group__layout_threecol_33_34_33' => [
+      'render element' => 'content',
+      'template' => 'field-group--layout-threecol-33-34-33',
+      'file' => 'templates/theme.inc',
+      'group' => NULL,
+    ],
+  ] + $all_layouts;
+}
+
+/**
+ * Alter the pre_rendered build of the field group element.
+ *
+ * @param array $element
+ *   Group being rendered.
+ * @param object $group
+ *   The Field group info.
+ */
+function field_group_layout_field_group_pre_render_alter(array &$element, &$group) {
+  if ($group->format_type === 'layouts') {
+    $element['#theme_wrappers'] = [
+      'field_group__' . $group->field_layout,
+      'field_group_layouts',
+    ];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_alter().
+ */
+function field_group_layout_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+  if ($hook === 'field_group_layouts') {
+    $element = $variables['content'];
+    $field_layout = !empty($element['#field_layout']) ? $element['#field_layout'] : NULL;
+    if (!empty($field_layout)) {
+      $suggestions[] = 'field_group__' . $field_layout;
+    }
+
+    $name = !empty($element['#group_name']) ? $element['#group_name'] : NULL;
+    $entity_type = !empty($element['#entity_type']) ? $element['#entity_type'] : NULL;
+    $bundle = !empty($element['#bundle']) ? $element['#bundle'] : NULL;
+
+    $wrapper = '';
+    if (isset($element['#wrapper_element'])) {
+      $wrapper = $element['#wrapper_element'];
+      $suggestions[] = $hook . '__' . $wrapper;
+    }
+
+    if (!empty($entity_type)) {
+      $suggestions[] = $hook . '__' . $entity_type;
+    }
+    if (!empty($bundle)) {
+      $suggestions[] = $hook . '__' . $bundle;
+    }
+    if (!empty($name)) {
+      $suggestions[] = $hook . '__' . $name;
+    }
+
+    if ($wrapper && !empty($entity_type)) {
+      $suggestions[] = $hook . '__' . $entity_type . '__' . $wrapper;
+    }
+
+    if (!empty($entity_type) && !empty($bundle)) {
+      $suggestions[] = $hook . '__' . $entity_type . '__' . $bundle;
+    }
+    if (!empty($entity_type) && !empty($name)) {
+      $suggestions[] = $hook . '__' . $entity_type . '__' . $name;
+    }
+
+    if ($wrapper && !empty($entity_type) && !empty($bundle)) {
+      $suggestions[] = $hook . '__' . $entity_type . '__' . $bundle . '__' . $wrapper;
+    }
+    if (!empty($entity_type) && !empty($bundle) && !empty($name)) {
+      $suggestions[] = $hook . '__' . $entity_type . '__' . $bundle . '__' . $name;
+    }
+  }
+}
+
+/**
+ * Get region by layout ID.
+ *
+ * @param string $layout_id
+ *   The element to check the empty state.
+ *
+ * @return array
+ *   Array of available group regions.
+ */
+function _field_group_layout_get_region_by_layout_id(string $layout_id) {
+  $layout_options = [];
+  $manager = Drupal::service('plugin.manager.core.layout');
+  if ($layout_id) {
+    $layout_definition = $manager->getDefinition($layout_id);
+    foreach ($layout_definition->getRegions() as $key => $value) {
+      $layout_options[$key] = $value['label']->__toString();
+    }
+  }
+  return $layout_options;
+}

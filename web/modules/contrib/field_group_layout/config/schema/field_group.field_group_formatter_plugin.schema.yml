@@ -1,0 +1,27 @@
+field_group.field_group_formatter_plugin.layouts:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the layout formatter settings'
+  mapping:
+    open:
+      type: boolean
+      label: 'Display element open by default.'
+    description:
+      type: text
+      label: 'Description of the element'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'
+
+field_group.field_group_formatter_plugin.default:
+  type: field_group.field_group_formatter_plugin.base
+  label: 'Mapping for the default formatter settings'
+  mapping:
+    open:
+      type: boolean
+      label: 'Display element open by default.'
+    description:
+      type: text
+      label: 'Description of the element'
+    required_fields:
+      type: boolean
+      label: 'Mark for required fields'

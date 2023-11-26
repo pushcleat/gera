@@ -1,0 +1,9 @@
+layouts:
+  css:
+    component:
+      css/field_group.layouts.css: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal.collapse
+    - core/modernizr

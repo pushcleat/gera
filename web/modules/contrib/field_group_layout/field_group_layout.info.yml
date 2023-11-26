@@ -1,0 +1,13 @@
+name: 'Field Group Layout'
+type: module
+description: 'Provides the ability to use layouts within your field groups.'
+package : Fields
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - field_group:field_group
+  - drupal:layout_discovery
+
+# Information added by Drupal.org packaging script on 2023-09-13
+version: '1.0.0'
+project: 'field_group_layout'
+datestamp: 1694585198
