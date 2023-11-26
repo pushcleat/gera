@@ -1,4 +1,4 @@
-uuid: c5fab027-ea0d-451e-8d31-ea8b0f190f68
+uuid: 8a84ff72-786c-4c22-9798-f87c4f7f2df3
 langcode: en
 status: true
 dependencies:
@@ -7,21 +7,19 @@ dependencies:
   module:
     - system
   theme:
-    - olivero
-_core:
-  default_config_hash: KWAiziL39uEzmOJEql_wbUP2RtqGceL3WM2CfxhMelE
-id: olivero_main_menu
-theme: olivero
+    - gera
+id: gera_mainnavigation
+theme: gera
 region: primary_menu
-weight: -6
+weight: 0
 provider: null
 plugin: 'system_menu_block:main'
 settings:
   id: 'system_menu_block:main'
   label: 'Main navigation'
-  label_display: '0'
+  label_display: visible
   provider: system
   level: 1
-  depth: 2
-  expand_all_items: true
+  depth: 0
+  expand_all_items: false
 visibility: {  }

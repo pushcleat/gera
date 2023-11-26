@@ -8,9 +8,9 @@ dependencies:
     - field.storage.node.field_contact
     - field.storage.node.field_country
     - node.type.request
-    - system.menu.main
     - taxonomy.vocabulary.banks
     - taxonomy.vocabulary.countries
+    - user.role.administrator
     - user.role.content_editor
   module:
     - comment
@@ -471,6 +471,7 @@ display:
         options:
           role:
             content_editor: content_editor
+            administrator: administrator
       cache:
         type: tag
         options: {  }
@@ -718,14 +719,19 @@ display:
       display_extenders: {  }
       path: admin/requests
       menu:
-        type: normal
+        type: tab
         title: Requests
         description: ''
         weight: 0
         expanded: false
-        menu_name: main
+        menu_name: tools
         parent: ''
         context: '0'
+      tab_options:
+        type: tab
+        title: Test
+        description: ''
+        weight: 0
     cache_metadata:
       max-age: -1
       contexts:

@@ -1,0 +1,17 @@
+roles:
+  anonymous:
+    theme: gera
+    weight: '-50'
+    admin_theme: gera
+  authenticated:
+    theme: ''
+    weight: '-49'
+    admin_theme: ''
+  content_editor:
+    theme: ''
+    weight: '-48'
+    admin_theme: ''
+  administrator:
+    theme: ''
+    weight: '-47'
+    admin_theme: ''

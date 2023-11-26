@@ -27,6 +27,8 @@ module:
   file: 0
   filter: 0
   gera_tgbot: 0
+  gin_toolbar: 0
+  gin_toolbar_custom_menu: 0
   help: 0
   history: 0
   image: 0
@@ -43,6 +45,7 @@ module:
   page_cache: 0
   path: 0
   path_alias: 0
+  role_theme_switcher: 0
   search: 0
   shortcut: 0
   symfony_mailer: 0
@@ -64,4 +67,5 @@ theme:
   claro: 0
   stable9: 0
   gera: 0
+  gin: 0
 profile: minimal

@@ -1,13 +1,13 @@
-uuid: bc42287d-22e6-4c97-a240-65ef5e3c2b12
+uuid: acb25e6e-ffd9-419e-8f6f-d2f9bea47fe7
 langcode: en
 status: true
 dependencies:
   theme:
-    - claro
+    - gin
 _core:
-  default_config_hash: fNwDdW063tk_ktzSWzZVeQS9wzvLooVO280BQ9WrsIs
-id: claro_page_title
-theme: claro
+  default_config_hash: HLQY2xgby8K3vN_98hiOSasOhm9pdCsH234-s0duJ8Q
+id: gin_page_title
+theme: gin
 region: header
 weight: -4
 provider: null

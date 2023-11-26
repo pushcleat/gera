@@ -1,0 +1,5 @@
+menu: admin
+role:
+  content_editor: content_editor
+icons:
+  system_admin: checked-view
