@@ -1,0 +1,23 @@
+uuid: 43888905-bd5f-4a6d-9040-f055f0745dbf
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - gera
+id: gera_sitebranding
+theme: gera
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  label_display: '0'
+  provider: system
+  use_site_logo: true
+  use_site_name: false
+  use_site_slogan: false
+visibility: {  }
