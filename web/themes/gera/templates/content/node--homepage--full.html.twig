@@ -81,27 +81,35 @@
 <article{{attributes.addClass(classes)}}>
 
   <div uk-height-viewport class="uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ base_path }}{{ active_theme_path() }}/images/survive.jpg');">
-    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">Headline</h1>
+    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical uk-heading-large">
+      Это слайд который всё всё объясняет
+    </h1>
   </div>
   <div uk-height-viewport class="uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ base_path }}{{ active_theme_path() }}/images/survive.jpg');">
-    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">Headline</h1>
+    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical uk-heading-large">
+      Этот слайд все объясняет немножк получше
+    </h1>
   </div>
-  <div uk-height-viewport class=" uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ base_path }}{{ active_theme_path() }}/images/survive.jpg');">
-    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">Headline</h1>
-  </div>
-  <div uk-height-viewport class=" uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ base_path }}{{ active_theme_path() }}/images/survive.jpg');">
-    <h1 class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">Headline</h1>
+  <div uk-height-viewport class=" uk-background-cover uk-flex" uk-parallax="bgy: -200" style="background-image: url('{{ base_path }}{{ active_theme_path() }}/images/survive.jpg');">
+    <div class="uk-width-1-2@m uk-text-center uk-margin-auto uk-margin-auto-vertical">
+      <div class="uk-light">
+        <h1 class="uk-heading-large">
+          Вот тут уже ваще всё понятно.
+        </h1>
+      </div>
+       <a href="/node/add/request" class="uk-button uk-button-primary uk-button-large">Напишите!</a>
+    </div>
   </div>
 
-  {{ title_prefix }}
+  {# {{ title_prefix }}
   {% if label and not page %}
     <h2{{title_attributes}}>
       <a href="{{ url }}" rel="bookmark">{{ label }}</a>
     </h2>
   {% endif %}
-  {{ title_suffix }}
+  {{ title_suffix }} #}
 
-  {% if display_submitted %}
+  {# {% if display_submitted %}
     <footer class="node__meta">
       {{ author_picture }}
       <div{{author_attributes.addClass('node__submitted')}}>
@@ -112,10 +120,10 @@
         {{ metadata }}
       </div>
     </footer>
-  {% endif %}
+  {% endif %} #}
 
-  <div{{content_attributes.addClass('node__content')}}>
+  {# <div{{content_attributes.addClass('node__content')}}>
     {{ content }}
-  </div>
+  </div> #}
 
 </article>
