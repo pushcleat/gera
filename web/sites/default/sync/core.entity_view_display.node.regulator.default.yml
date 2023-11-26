@@ -1,0 +1,35 @@
+uuid: 54a12578-2573-40f9-a730-8c2149e3ee0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.regulator.field_email
+    - node.type.regulator
+  module:
+    - field_layout
+    - layout_discovery
+    - user
+third_party_settings:
+  field_layout:
+    id: layout_twocol
+    settings:
+      label: ''
+id: node.regulator.default
+targetEntityType: node
+bundle: regulator
+mode: default
+content:
+  field_email:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: first
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: first
+hidden: {  }

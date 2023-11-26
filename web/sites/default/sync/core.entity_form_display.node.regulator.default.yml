@@ -1,0 +1,43 @@
+uuid: 2165538c-ef70-4ae4-8c27-03bef6a68560
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.regulator.field_email
+    - node.type.regulator
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
+id: node.regulator.default
+targetEntityType: node
+bundle: regulator
+mode: default
+content:
+  field_email:
+    type: string_textfield
+    weight: 26
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_email
     - system.menu.main
     - taxonomy.vocabulary.countries
     - user.role.administrator
@@ -93,6 +94,134 @@ display:
           separator: ', '
           field_api_classes: false
           convert_spaces: false
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: field_bank_regulator
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: field
+          label: Регулятор
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_email:
+          id: field_email
+          table: node__field_email
+          field: field_email
+          relationship: field_bank_regulator
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: Email
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         field_country:
           id: field_country
           table: node__field_country
@@ -336,13 +465,28 @@ display:
           default_row_class: true
           columns:
             name: name
+            title: title
+            field_email: title
             field_country: field_country
             edit_taxonomy_term: edit_taxonomy_term
-            view_taxonomy_term: edit_taxonomy_term
           default: '-1'
           info:
             name:
               sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: '     '
+              empty_column: false
+              responsive: ''
+            field_email:
+              sortable: false
               default_sort_order: asc
               align: ''
               separator: ''
@@ -360,13 +504,6 @@ display:
               default_sort_order: asc
               align: ''
               separator: '   '
-              empty_column: false
-              responsive: ''
-            view_taxonomy_term:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
               empty_column: false
               responsive: ''
           override: true
@@ -396,6 +533,15 @@ display:
           entity_type: taxonomy_term
           plugin_id: entity_reverse
           required: false
+        field_bank_regulator:
+          id: field_bank_regulator
+          table: taxonomy_term__field_bank_regulator
+          field: field_bank_regulator
+          relationship: none
+          group_type: group
+          admin_label: 'field_bank_regulator: Content'
+          plugin_id: standard
+          required: false
       group_by: true
       header: {  }
       footer: {  }
@@ -409,7 +555,8 @@ display:
         - url.query_args
         - user
         - user.roles
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_email'
   page_1:
     id: page_1
     display_title: Page
@@ -421,6 +568,7 @@ display:
       menu:
         type: normal
         title: Страны
+        weight: -45
         menu_name: main
         parent: ''
     cache_metadata:
@@ -432,4 +580,5 @@ display:
         - url.query_args
         - user
         - user.roles
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_email'

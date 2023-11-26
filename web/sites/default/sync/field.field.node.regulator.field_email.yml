@@ -1,0 +1,19 @@
+uuid: fdcb2bd5-726d-4d44-a1a5-9248a6d1871c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email
+    - node.type.regulator
+id: node.regulator.field_email
+field_name: field_email
+entity_type: node
+bundle: regulator
+label: Email
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

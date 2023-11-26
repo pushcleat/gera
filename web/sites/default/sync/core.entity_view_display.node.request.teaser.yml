@@ -47,3 +47,4 @@ hidden:
   field_country: true
   field_message_requester: true
   field_messsage_institution: true
+  field_status: true

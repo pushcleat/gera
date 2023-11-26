@@ -87,4 +87,5 @@ content:
     weight: 6
     region: second_below
 hidden:
+  field_status: true
   links: true

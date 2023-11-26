@@ -1,0 +1,22 @@
+uuid: ac85ed00-13c5-4633-bc41-6bc3069c8455
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.regulator
+id: node.regulator.promote
+field_name: promote
+entity_type: node
+bundle: regulator
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

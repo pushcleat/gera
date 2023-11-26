@@ -1,0 +1,29 @@
+uuid: fd4d0117-6a96-4258-8f3b-e477fe883611
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_bank_regulator
+    - node.type.regulator
+    - taxonomy.vocabulary.countries
+id: taxonomy_term.countries.field_bank_regulator
+field_name: field_bank_regulator
+entity_type: taxonomy_term
+bundle: countries
+label: Регулятор
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      regulator: regulator
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

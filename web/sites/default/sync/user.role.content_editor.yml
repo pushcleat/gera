@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - node.type.regulator
     - node.type.request
     - node.type.requester
     - taxonomy.vocabulary.banks
@@ -30,23 +31,31 @@ permissions:
   - 'access files overview'
   - 'access toolbar'
   - 'access tour'
+  - 'create regulator content'
   - 'create request content'
   - 'create requester content'
   - 'create terms in banks'
   - 'create terms in countries'
   - 'create url aliases'
+  - 'delete any regulator content'
   - 'delete own files'
+  - 'delete own regulator content'
   - 'delete own request content'
   - 'delete own requester content'
+  - 'delete regulator revisions'
+  - 'edit any regulator content'
   - 'edit any request content'
   - 'edit any requester content'
+  - 'edit own regulator content'
   - 'edit own request content'
   - 'edit own requester content'
   - 'edit terms in banks'
   - 'edit terms in countries'
   - 'revert all revisions'
+  - 'revert regulator revisions'
   - 'view all revisions'
   - 'view own unpublished content'
+  - 'view regulator revisions'
   - 'view request revisions'
   - 'view requester revisions'
   - 'view the administration theme'

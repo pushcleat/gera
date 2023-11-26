@@ -19,3 +19,4 @@ mode: default
 content: {  }
 hidden:
   description: true
+  field_bank_regulator: true

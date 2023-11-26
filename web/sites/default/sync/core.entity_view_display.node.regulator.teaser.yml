@@ -1,0 +1,29 @@
+uuid: 5b537274-0853-495b-9457-66a904c41d47
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.regulator.field_email
+    - node.type.regulator
+  module:
+    - field_layout
+    - layout_discovery
+    - user
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings:
+      label: ''
+id: node.regulator.teaser
+targetEntityType: node
+bundle: regulator
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_email: true

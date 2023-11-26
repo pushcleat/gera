@@ -1,0 +1,18 @@
+uuid: 4f310072-6752-4ad7-bbb9-412f5f3342b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.regulator
+id: node.regulator.title
+field_name: title
+entity_type: node
+bundle: regulator
+label: Название
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
