@@ -1,6 +1,6 @@
 uuid: c6efbfa2-0b98-4f7c-8da6-c51eea371341
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,7 +10,7 @@ _core:
   default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
 id: gera_content
 theme: gera
-region: content
+region: ''
 weight: 0
 provider: null
 plugin: system_main_block

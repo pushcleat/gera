@@ -1,6 +1,6 @@
 uuid: 171980a9-a199-4847-8709-bcea78a56168
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,7 +10,7 @@ _core:
   default_config_hash: BZ5tpW7H8X4PVGRm3MImTIHd2tN0eF7zOtp4SpRYUA0
 id: gera_messages
 theme: gera
-region: highlighted
+region: ''
 weight: -5
 provider: null
 plugin: system_messages_block

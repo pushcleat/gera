@@ -1,6 +1,6 @@
 uuid: 74c722c1-ba11-4d84-a35f-41710f0e4476
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
@@ -10,7 +10,7 @@ _core:
   default_config_hash: n_nlgjggHVfQt2H__zvLOKB2YtjPDbQ5tHijF9LE1aM
 id: gera_site_branding
 theme: gera
-region: header
+region: ''
 weight: 0
 provider: null
 plugin: system_branding_block

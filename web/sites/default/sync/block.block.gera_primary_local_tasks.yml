@@ -1,6 +1,6 @@
 uuid: ef88960a-84bb-4aa3-ba2d-eb502dab4715
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
     - gera
@@ -8,7 +8,7 @@ _core:
   default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
 id: gera_primary_local_tasks
 theme: gera
-region: highlighted
+region: ''
 weight: -4
 provider: null
 plugin: local_tasks_block

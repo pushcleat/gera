@@ -1,6 +1,6 @@
 uuid: a1e3b511-3283-44a1-99d6-e5a4ae110c40
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.main
@@ -12,7 +12,7 @@ _core:
   default_config_hash: KWAiziL39uEzmOJEql_wbUP2RtqGceL3WM2CfxhMelE
 id: gera_main_menu
 theme: gera
-region: primary_menu
+region: ''
 weight: 0
 provider: null
 plugin: 'system_menu_block:main'
