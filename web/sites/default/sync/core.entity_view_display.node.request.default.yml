@@ -34,24 +34,23 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: first_above
   field__documents:
-    type: file_table
+    type: file_default
     label: above
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 5
+    weight: 4
     region: second_above
   field_bank:
-    type: entity_reference_entity_view
-    label: above
+    type: entity_reference_label
+    label: inline
     settings:
-      view_mode: default
       link: true
     third_party_settings: {  }
-    weight: 3
+    weight: 2
     region: second_above
   field_contact:
     type: entity_reference_label
@@ -59,7 +58,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: second_above
   field_country:
     type: entity_reference_label
@@ -67,7 +66,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: second_above
   field_message_requester:
     type: comment_default
@@ -76,7 +75,7 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 6
+    weight: 5
     region: first_below
   field_messsage_institution:
     type: comment_default
@@ -85,11 +84,7 @@ content:
       view_mode: default
       pager_id: 0
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: second_below
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: top
-hidden: {  }
+hidden:
+  links: true

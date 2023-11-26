@@ -2,6 +2,7 @@ gin:
   css:
     theme:
       dist/css/base/gin.css: { minified: false }
+      CSS_OVERRIDES_TO_REMOVE.css: {}
   dependencies:
     - gin/gin_base
     - gin/legacy_css

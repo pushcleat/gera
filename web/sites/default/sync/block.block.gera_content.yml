@@ -10,7 +10,7 @@ _core:
   default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
 id: gera_content
 theme: gera
-region: ''
+region: sidebar_first
 weight: 0
 provider: null
 plugin: system_main_block

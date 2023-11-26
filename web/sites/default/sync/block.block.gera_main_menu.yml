@@ -12,7 +12,7 @@ _core:
   default_config_hash: KWAiziL39uEzmOJEql_wbUP2RtqGceL3WM2CfxhMelE
 id: gera_main_menu
 theme: gera
-region: ''
+region: sidebar_first
 weight: 0
 provider: null
 plugin: 'system_menu_block:main'

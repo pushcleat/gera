@@ -8,7 +8,7 @@ _core:
   default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
 id: gera_secondary_local_tasks
 theme: gera
-region: ''
+region: sidebar_first
 weight: -2
 provider: null
 plugin: local_tasks_block
