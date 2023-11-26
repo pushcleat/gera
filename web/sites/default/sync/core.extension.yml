@@ -56,9 +56,12 @@ module:
   update: 0
   user: 0
   views_ui: 0
+  formdazzle: 10
   views: 10
   minimal: 1000
 theme:
   olivero: 0
   claro: 0
+  stable9: 0
+  gera: 0
 profile: minimal
