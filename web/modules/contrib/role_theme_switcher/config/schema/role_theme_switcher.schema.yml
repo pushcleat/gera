@@ -1,0 +1,20 @@
+# Schema for configuration files of the role_theme_switcher module.
+role_theme_switcher.settings:
+  type: config_object
+  label: 'Role theme switcher settings'
+  mapping:
+    roles:
+      type: sequence
+      label: 'roles'
+      sequence:
+        type: mapping
+        mapping:
+          theme:
+            type: string
+            label: 'Selected theme to specific role'
+          weight:
+            type: string
+            label: 'Weight of this role'
+          admin_theme:
+            type: string
+            label: 'Selected admin theme to specific role'

@@ -1,0 +1,22 @@
+{
+  "name": "drupal/gin_toolbar_custom_menu",
+  "description": "This module provides the ability to change the Gin Toolbar menu for specific user roles.",
+  "type": "drupal-module",
+  "homepage": "https://drupal.org/project/gin_toolbar_custom_menu",
+  "authors": [
+    {
+      "name": "João mauricio (jmauricio)",
+      "email": "jmauricio@javali.pt",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/gin_toolbar_custom_menu",
+    "source": "https://git.drupalcode.org/project/gin_toolbar_custom_menu"
+  },
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "require": {
+    "drupal/gin_toolbar": "^1.0@RC"
+  }
+}

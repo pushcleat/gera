@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains role_theme_switcher.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function role_theme_switcher_help($route_name, RouteMatchInterface $routeMatch) {
+  switch ($route_name) {
+    case 'role_theme_switcher.role_theme_switcher_admin_settings':
+      return '<p>' . t("This form allows you to assign separate themes for different roles (including anonymous) in your system. <br/> Theme will be applied to users following the prioritized roles below.") . '</p>';
+  }
+}

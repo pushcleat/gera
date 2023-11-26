@@ -1,0 +1,11 @@
+type: module
+name: Gin Toolbar Custom Menu
+description: Custom Menu for Gin Toolbar 
+core_version_requirement: ^8.8 || ^9 || ^10
+dependencies:
+  - gin_toolbar:gin_toolbar
+
+# Information added by Drupal.org packaging script on 2023-11-09
+version: '1.0.1'
+project: 'gin_toolbar_custom_menu'
+datestamp: 1699523395

@@ -1,0 +1,10 @@
+role_theme_switcher.role_theme_switcher_admin_settings:
+  path: '/admin/appearance/role_theme_switcher'
+  defaults:
+    _form: '\Drupal\role_theme_switcher\Form\AdminSettingsForm'
+    _title: 'Role theme switcher settings'
+  requirements:
+    _permission: 'administer themes'
+  options:
+    _admin_route: TRUE
+

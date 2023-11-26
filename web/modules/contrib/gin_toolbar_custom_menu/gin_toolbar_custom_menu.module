@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Module File.
+ */
+
+use Drupal\gin_toolbar_custom_menu\Render\Element\GinToolbarCustomMenu;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function gin_toolbar_custom_menu_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the gin_toolbar_custom_menu module.
+    case 'help.page.gin_toolbar_custom_menu':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module provides the ability to change the Gin Toolbar menu for specific user roles.') . '</p>';
+      $output .= '<h3>' . t('Installation') . '</h3>';
+      $output .= '<p>' . t('<a href="https://www.drupal.org/documentation/install/modules-themes/modules-8">Normal module installation procedure</a>.') . '</p>';
+      $output .= '<h3>' . t('Dependencies') . '</h3>';
+      $output .= '<p>' . t('<a href="https://www.drupal.org/project/gin_toolbar">Gin Toolbar</a>') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<p>' . t('Go to "/admin/config/system/gin-toolbar-custom-menu" and select the menu you want to show and the user roles you want to show it to.') . '</p>';
+      $output .= '<h3>' . t('Credits') . '</h3>';
+      $output .= '<p>' . t('Powered by <a href="http://javali.pt/">Javali</a>.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_toolbar_alter().
+ */
+function gin_toolbar_custom_menu_toolbar_alter(&$items) {
+
+  $items['administration']['tray']['toolbar_administration']['#pre_render'][] = [
+    GinToolbarCustomMenu::class,
+    'preRenderTray',
+  ];
+}
+
+/**
+ * Adds toolbar-specific attributes to the menu link tree.
+ *
+ * @param \Drupal\Core\Menu\MenuLinkTreeElement[] $tree
+ *   The menu link tree to manipulate.
+ *
+ * @return \Drupal\Core\Menu\MenuLinkTreeElement[]
+ *   The manipulated menu link tree.
+ */
+function gin_toolbar_custom_menu_toolbar_menu_navigation_links(array $tree) {
+  $config = \Drupal::config('gin_toolbar_custom_menu.settings');
+  $icons = $config->get('icons');
+
+  foreach ($tree as $element) {
+    if ($element->subtree) {
+      gin_toolbar_custom_menu_toolbar_menu_navigation_links($element->subtree);
+    }
+    $system_path = $element->link->getUrlObject()->isRouted() ? $element->link->getUrlObject()->getInternalPath() : '';
+    if ($element->link->getUrlObject()->isRouted() && $element->link->getUrlObject()->getRouteName() === '<front>') {
+      $system_path = '<front>';
+    }
+    $definition = $element->link->getPluginDefinition();
+    $path_replaced = str_replace(['.', ' ', '_', '/'], ['-', '-', '-', '-'], $system_path);
+    $system_path_string = strtolower($path_replaced);
+    $string = strtolower(str_replace(['.', ' ', '_'], ['-', '-', '-'], $definition['id']));
+    $id = str_replace('.', '_', $definition['id']);
+
+    $element->options['attributes']['class'][] = 'toolbar-icon';
+    $element->options['attributes']['class'][] = 'custom-toolbar-icon';
+    $element->options['attributes']['class'][] = Html::cleanCssIdentifier('toolbar-icon-' . $system_path_string);
+    $element->options['attributes']['class'][] = Html::cleanCssIdentifier('toolbar-icon-' . $string);
+    if (!empty($icons[$id])) {
+      $element->options['attributes']['class'][] = Html::cleanCssIdentifier('toolbar-icon-' . $icons[$id]);
+    }
+
+    $element->options['attributes']['title'] = $element->link->getDescription();
+  }
+
+  return $tree;
+}

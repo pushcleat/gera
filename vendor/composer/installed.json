@@ -2345,6 +2345,184 @@
             "install-path": "../../web/modules/contrib/formdazzle"
         },
         {
+            "name": "drupal/gin",
+            "version": "3.0.0-rc7",
+            "version_normalized": "3.0.0.0-RC7",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gin.git",
+                "reference": "8.x-3.0-rc7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gin-8.x-3.0-rc7.zip",
+                "reference": "8.x-3.0-rc7",
+                "shasum": "9f91862fc82ef8b0adbf34b26caa3c42d4f1f6b2"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10",
+                "drupal/gin_toolbar": "^1.0@beta"
+            },
+            "type": "drupal-theme",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.0-rc7",
+                    "datestamp": "1697193234",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "scripts": {
+                "phpcs": [
+                    "phpcs -s --runtime-set ignore_warnings_on_exit 1 --runtime-set ignore_errors_on_exit 0 'web/modules/custom'"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Sascha Eggenberger (saschaeggi)",
+                    "homepage": "https://www.drupal.org/u/saschaeggi",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "For a better Admin and Content Editor Experience.",
+            "homepage": "https://www.drupal.org/project/gin",
+            "support": {
+                "source": "https://git.drupalcode.org/project/gin",
+                "issues": "https://www.drupal.org/project/issues/gin"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/sponsors/saschaeggi"
+                },
+                {
+                    "type": "other",
+                    "url": "https://paypal.me/saschaeggi"
+                }
+            ],
+            "install-path": "../../web/themes/contrib/gin"
+        },
+        {
+            "name": "drupal/gin_toolbar",
+            "version": "1.0.0-rc4",
+            "version_normalized": "1.0.0.0-RC4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gin_toolbar.git",
+                "reference": "8.x-1.0-rc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gin_toolbar-8.x-1.0-rc4.zip",
+                "reference": "8.x-1.0-rc4",
+                "shasum": "4f5fa958362b02804564302b0dfceb39e1b38119"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-rc4",
+                    "datestamp": "1697192878",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Sascha Eggenberger (saschaeggi)",
+                    "homepage": "https://www.drupal.org/u/saschaeggi",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Gin Toolbar for Frontend use",
+            "homepage": "https://www.drupal.org/project/gin_toolbar",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/gin_toolbar",
+                "issues": "https://www.drupal.org/project/issues/gin_toolbar"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/sponsors/saschaeggi"
+                },
+                {
+                    "type": "other",
+                    "url": "https://paypal.me/saschaeggi"
+                }
+            ],
+            "install-path": "../../web/modules/contrib/gin_toolbar"
+        },
+        {
+            "name": "drupal/gin_toolbar_custom_menu",
+            "version": "1.0.1",
+            "version_normalized": "1.0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/gin_toolbar_custom_menu.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/gin_toolbar_custom_menu-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "8e9997dd937fbe5f00f69917a195cc43a0732e92"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10",
+                "drupal/gin_toolbar": "^1.0@RC"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1699523392",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "João mauricio (jmauricio)",
+                    "homepage": "https://www.drupal.org/user/274084",
+                    "email": "jmauricio@javali.pt",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "This module provides the ability to change the Gin Toolbar menu for specific user roles.",
+            "homepage": "https://drupal.org/project/gin_toolbar_custom_menu",
+            "support": {
+                "source": "https://git.drupalcode.org/project/gin_toolbar_custom_menu",
+                "issues": "https://www.drupal.org/project/issues/gin_toolbar_custom_menu"
+            },
+            "install-path": "../../web/modules/contrib/gin_toolbar_custom_menu"
+        },
+        {
             "name": "drupal/inline_entity_form",
             "version": "1.0.0-rc15",
             "version_normalized": "1.0.0.0-RC15",
@@ -2668,6 +2846,73 @@
                 "source": "https://git.drupalcode.org/project/mailsystem"
             },
             "install-path": "../../web/modules/contrib/mailsystem"
+        },
+        {
+            "name": "drupal/role_theme_switcher",
+            "version": "1.2.0",
+            "version_normalized": "1.2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/role_theme_switcher.git",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/role_theme_switcher-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "360864a3c42b4daef3c261a22a539d7e26630d3d"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1655383703",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Dubreuil",
+                    "homepage": "https://www.drupal.org/u/juliend",
+                    "email": "dubreuil.julien@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Neslee Canil Pinto",
+                    "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Pravin Ajaaz",
+                    "homepage": "https://www.drupal.org/user/2910049"
+                },
+                {
+                    "name": "tiutiun",
+                    "homepage": "https://www.drupal.org/user/158669"
+                }
+            ],
+            "description": "Assign a specific theme for different roles.",
+            "homepage": "https://www.drupal.org/project/role_theme_switcher",
+            "keywords": [
+                "Drupal",
+                "Theme"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/role_theme_switcher",
+                "issues": "https://www.drupal.org/project/issues/role_theme_switcher"
+            },
+            "install-path": "../../web/modules/contrib/role_theme_switcher"
         },
         {
             "name": "drupal/symfony_mailer",

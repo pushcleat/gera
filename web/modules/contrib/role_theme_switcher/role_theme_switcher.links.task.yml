@@ -1,0 +1,5 @@
+role_theme_switcher.role_theme_switcher_admin_settings:
+  route_name: role_theme_switcher.role_theme_switcher_admin_settings
+  title: 'Role Theme Switcher'
+  base_route: system.themes_page
+  weight: 150

@@ -1,0 +1,7 @@
+gin_toolbar_custom_menu.settings:
+  path: '/admin/config/system/gin-toolbar-custom-menu'
+  defaults:
+    _form: 'Drupal\gin_toolbar_custom_menu\Form\GinToolbarCustomMenuSettings'
+    _title: 'Gin Toolbar Custom Menu Settings'
+  requirements:
+    _permission: 'configure gin toolbar custom menu'

@@ -1,0 +1,5 @@
+gin_toolbar_custom_menu.settings:
+  title: 'Gin Toolbar Custom Menu'
+  description: 'Gin Toolbar Custom Menu Settings'
+  parent: system.admin_config_system
+  route_name: gin_toolbar_custom_menu.settings

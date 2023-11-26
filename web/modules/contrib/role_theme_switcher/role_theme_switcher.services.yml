@@ -1,0 +1,8 @@
+services:
+  theme.negotiator.role_theme_switcher:
+    class: Drupal\role_theme_switcher\Theme\RoleThemeSwitcherNegotiator
+    arguments: ['@config.factory', '@current_user', '@router.admin_context']
+    tags:
+      - { name: theme_negotiator, priority: -30 }
+
+
