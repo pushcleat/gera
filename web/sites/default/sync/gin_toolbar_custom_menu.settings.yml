@@ -1,5 +1,5 @@
-menu: admin
+menu: main
 role:
   content_editor: content_editor
 icons:
-  system_admin: checked-view
+  'views_view:views_requests_page_1': list-view

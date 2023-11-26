@@ -8,6 +8,7 @@ dependencies:
     - field.storage.node.field_contact
     - field.storage.node.field_country
     - node.type.request
+    - system.menu.main
     - taxonomy.vocabulary.banks
     - taxonomy.vocabulary.countries
     - user.role.administrator
@@ -717,14 +718,15 @@ display:
     position: 1
     display_options:
       display_extenders: {  }
-      path: admin/requests
+      path: requests
       menu:
-        type: tab
-        title: Requests
+        type: normal
+        title: Заявки
         description: ''
-        weight: 0
+        weight: -49
+        enabled: true
         expanded: false
-        menu_name: tools
+        menu_name: main
         parent: ''
         context: '0'
       tab_options:
