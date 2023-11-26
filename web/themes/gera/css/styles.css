@@ -1,5 +1,21 @@
-.field--type-text-with-summary .text-format-wrapper {
+.field--type-text-with-summary [data-drupal-selector="edit-body-0-format"] {
   display: none;
+}
+
+[data-drupal-selector="node-request-form"] [data-drupal-selector="tabledrag-toggle-weight"] {
+  display: none;
+}
+
+[data-drupal-selector="node-request-form"] [data-drupal-selector="edit-field-documents"] table {
+  width: 100%;
+}
+
+[data-drupal-selector="node-request-form"] [data-drupal-selector="edit-field-documents"] thead {
+  display: none;
+}
+
+[data-drupal-selector="node-request-form"] [data-drupal-selector="edit-field-documents"] td {
+  padding: 10px;
 }
 
 [data-drupal-selector="edit-field-contact-0-inline-entity-form-field-type"] .form-radios {
