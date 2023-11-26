@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.restricted_html
     - node.type.request
+    - node.type.requester
   module:
     - comment
     - filter
@@ -21,5 +22,6 @@ permissions:
   - 'access comments'
   - 'access content'
   - 'create request content'
+  - 'create requester content'
   - 'search content'
   - 'use text format restricted_html'
