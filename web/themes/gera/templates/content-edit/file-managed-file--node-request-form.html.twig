@@ -15,17 +15,8 @@
   set classes = [
     'js-form-managed-file',
     'form-managed-file',
-    'file',
   ]
 %}
-<div{{ attributes.addClass(classes) }}>
-  <label class="file-label">
+<div{{ attributes.addClass(classes)}}>
   {{ element }}
-    <span class="file-cta">
-      <span class="file-label">
-        Choose a file…
-      </span>
-    </span>
-  </label>
-
 </div>

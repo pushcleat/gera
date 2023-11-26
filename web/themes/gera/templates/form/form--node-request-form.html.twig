@@ -10,6 +10,11 @@
  * @see template_preprocess_form()
  */
 #}
-<form{{ attributes }}>
-  {{ children }}
-</form>
+<div class="uk-section">
+  <div class="uk-container uk-container-small">
+    <form{{ attributes.addClass('uk-card', 'uk-card-default', 'uk-card-body', 'uk-form-stacked') }}>
+      <h1 class="uk-h1">Заявка</h1>
+      {{ children }}
+    </form>
+  </div>
+</div>

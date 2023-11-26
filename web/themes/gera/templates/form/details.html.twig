@@ -15,15 +15,16 @@
  * @see template_preprocess_details()
  */
 #}
-<details{{ attributes }}>
+<div{{ attributes }}>
   {%- if title -%}
     {%
       set summary_classes = [
         required ? 'js-form-required',
         required ? 'form-required',
+        'uk-form-label',
       ]
     %}
-    <summary{{ summary_attributes.addClass(summary_classes) }}>{{ title }}</summary>
+    <div{{ summary_attributes.addClass(summary_classes) }}>{{ title }}</div>
   {%- endif -%}
   <div class="details-wrapper">
     {% if errors %}
@@ -41,4 +42,4 @@
       {{ value }}
     {%- endif -%}
   </div>
-</details>
+</div>
